@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export function Footer() {
@@ -6,17 +7,20 @@ export function Footer() {
       <div className="section-divider" />
       <div className="container-main py-14">
         <div className="grid gap-10 md:grid-cols-3">
-          <div className="max-w-[260px]">
+          <div className="max-w-[300px]">
             <Link
               href="/"
               className="font-heading text-base font-bold text-white"
               aria-label="ByteStream Strategies home"
             >
-              ByteStream <span className="text-cyan">Strategies</span>
+            <Image src="/brand/logo-bg-black.png" alt="AlignAI Logo" width={150} height={150} />
             </Link>
             <p className="mt-3 text-sm leading-relaxed text-slate">
               Governance architecture for AI-influenced enterprise decisions.
               <span className="ml-2 inline-block text-xs text-slate">✦</span>
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-slate">
+              ByteStream Strategies Inc., Ottawa, ON
             </p>
           </div>
 
@@ -87,3 +91,7 @@ export function Footer() {
     </footer>
   );
 }
+
+
+
+

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -38,14 +39,15 @@ export function Header() {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-deep-blue bg-navy/95 backdrop-blur-sm">
-      <div className="container-main flex h-14 items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-600 bg-navy/95 backdrop-blur-sm">
+      <div className="container-main flex h-[70px] items-center justify-between">
         <Link
           href="/"
           className="font-heading text-base font-bold text-white"
           aria-label="ByteStream Strategies home"
         >
-          ByteStream <span className="text-cyan">Strategies</span>
+          <Image src="/brand/logo-bg-black.png" alt="AlignAI Logo" width={150} height={150} />
+
         </Link>
 
         <nav className="hidden md:block" aria-label="Primary navigation">
@@ -54,11 +56,10 @@ export function Header() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`relative pb-1 text-[13px] font-semibold uppercase tracking-[0.07em] transition-colors ${
-                    isActive(link.href)
+                  className={`relative pb-1 text-[13px] font-semibold uppercase tracking-[0.07em] transition-colors ${isActive(link.href)
                       ? "text-white after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-cyan"
                       : "text-light-slate hover:text-white"
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </Link>
@@ -112,9 +113,8 @@ export function Header() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`text-xl font-medium ${
-                    isActive(link.href) ? "text-cyan" : "text-white"
-                  }`}
+                  className={`text-xl font-medium ${isActive(link.href) ? "text-cyan" : "text-white"
+                    }`}
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label}

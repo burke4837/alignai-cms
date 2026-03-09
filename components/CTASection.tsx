@@ -2,12 +2,12 @@ import Link from "next/link";
 
 export function CTASection() {
   return (
-    <section className="bg-deep-blue py-14" aria-label="Call to action">
+    <section className="bg-deep-blue py-20" aria-label="Call to action">
       <div className="container-main text-center">
-        <h2 className="text-3xl font-semibold text-white md:text-4xl">
+        <h2 className="text-2xl font-semibold text-white md:text-2xl">
           Ready to understand what your AI is actually deciding?
         </h2>
-        <p className="mx-auto mt-4 max-w-prose text-sm text-light-slate">
+        <p className="mx-auto mt-4 max-w-6xl text-sm text-light-slate">
           No platform required. No prior governance work needed. One
           conversation to establish whether there is a fit.
         </p>
