@@ -4,7 +4,7 @@ import { CTASection } from "@/components/CTASection";
 export const metadata: Metadata = {
   title: "AlignAI Governance Framework",
   description:
-    "The AlignAI Framework provides five governance pillars for enterprise AI: Transparency, Accountability, Compliance, Risk Management, and Continuous Monitoring.",
+    "Governance architecture for the layer where AI actually changes enterprise behaviour.",
 };
 
 const PILLARS = [
@@ -44,14 +44,15 @@ export default function FrameworkPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-navy pt-32 pb-20">
+      <section className="hero-panel pt-32 pb-20">
         <div className="container-main">
-          <h1 className="max-w-3xl text-4xl text-white md:text-5xl">
-            The AlignAI Governance Framework
+          <h1 className="max-w-4xl text-4xl text-white md:text-5xl">
+            Governance architecture for the layer where AI actually changes
+            enterprise behaviour.
           </h1>
           <p className="mt-6 max-w-prose text-lg text-light-slate">
-            Five pillars that form a comprehensive approach to enterprise AI
-            governance, from initial assessment through continuous monitoring.
+            AlignAI governs the AI Decision Influence Layer — the environment
+            created by AI systems before humans make decisions.
           </p>
         </div>
       </section>
@@ -59,26 +60,26 @@ export default function FrameworkPage() {
       <div className="section-divider" />
 
       {/* Timeline */}
-      <section className="bg-off-white py-20">
+      <section className="bg-navy py-20">
         <div className="container-main">
-          <div className="relative mx-auto max-w-2xl">
-            <div
-              className="absolute left-6 top-0 bottom-0 w-px bg-mid-blue md:left-8"
-              aria-hidden="true"
-            />
+          <div className="relative mx-auto max-w-4xl">
+            <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-mid-blue" aria-hidden="true" />
             <ol className="space-y-16">
               {PILLARS.map((pillar) => (
-                <li key={pillar.number} className="relative pl-16 md:pl-20">
+                <li
+                  key={pillar.number}
+                  className="relative grid gap-6 md:grid-cols-[1fr_48px_1fr] md:items-start"
+                >
+                  <h3 className="text-right text-lg font-semibold text-white md:pr-8">
+                    {pillar.title}
+                  </h3>
                   <span
-                    className="absolute left-0 top-0 flex h-12 w-12 items-center justify-center rounded-full bg-mid-blue font-heading text-sm font-bold text-white md:h-16 md:w-16 md:text-base"
+                    className="z-10 mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-cyan bg-deep-blue font-heading text-sm font-bold text-white"
                     aria-hidden="true"
                   >
                     {pillar.number}
                   </span>
-                  <h3 className="text-xl font-semibold text-navy">
-                    {pillar.title}
-                  </h3>
-                  <p className="mt-3 max-w-prose text-sm leading-relaxed text-slate">
+                  <p className="max-w-prose text-sm leading-relaxed text-light-slate md:pl-8">
                     {pillar.description}
                   </p>
                 </li>
@@ -91,33 +92,29 @@ export default function FrameworkPage() {
       <div className="section-divider" />
 
       {/* Conceptual Model */}
-      <section className="bg-white py-20">
-        <div className="container-main text-center">
-          <h2 className="text-3xl text-navy">Conceptual Model</h2>
+      <section className="bg-off-white py-20">
+        <div className="container-main">
+          <h2 className="text-center text-3xl text-navy">Conceptual Model</h2>
           <p className="mx-auto mt-4 max-w-prose text-slate">
             The AlignAI framework operates as an integrated cycle — each pillar
             reinforces the others to create a self-sustaining governance system.
           </p>
-          <div className="mx-auto mt-12 max-w-xl">
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+          <div className="mx-auto mt-12 grid max-w-3xl gap-4 md:grid-cols-2">
               {PILLARS.map((pillar) => (
                 <div
                   key={pillar.number}
-                  className="rounded-btn border border-light-slate bg-off-white p-4 text-center"
+                  className="rounded-btn border border-light-slate bg-white p-4"
                 >
-                  <span className="block font-heading text-2xl font-bold text-mid-blue">
+                  <span className="block font-heading text-sm font-bold text-mid-blue">
                     {pillar.number}
                   </span>
-                  <span className="mt-1 block text-xs font-medium text-navy">
+                  <span className="mt-1 block text-sm font-medium text-navy">
                     {pillar.title}
                   </span>
                 </div>
               ))}
-              <div className="flex items-center justify-center rounded-btn border border-cyan bg-navy p-4 text-center">
-                <span className="text-xs font-medium text-cyan">
-                  Continuous Cycle
-                </span>
-              </div>
+            <div className="rounded-btn border border-mid-blue bg-[#dce8f5] p-4 text-center text-sm font-semibold text-deep-blue md:col-span-2">
+              Continuous governance flow across all five pillars
             </div>
           </div>
         </div>

@@ -1,8 +1,6 @@
 import Link from "next/link";
 
 export function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer className="bg-[#08162e] text-light-slate">
       <div className="section-divider" />
@@ -12,13 +10,13 @@ export function Footer() {
             <Link
               href="/"
               className="font-heading text-base font-bold text-white"
-              aria-label="AlignAI home"
+              aria-label="ByteStream Strategies home"
             >
-              Align<span className="text-cyan">AI</span>
+              ByteStream <span className="text-cyan">Strategies</span>
             </Link>
             <p className="mt-3 text-sm leading-relaxed text-slate">
               Governance architecture for AI-influenced enterprise decisions.
-              By ByteStream Strategies.
+              <span className="ml-2 inline-block text-xs text-slate">✦</span>
             </p>
           </div>
 
@@ -60,10 +58,18 @@ export function Footer() {
               Contact
             </p>
             <a
-              href="mailto:contact@bytestreamstrategies.com"
+              href="mailto:bburke@bytestream.ca"
               className="mt-3 block text-sm hover:text-white transition-colors"
             >
-              contact@bytestreamstrategies.com
+              bburke@bytestream.ca
+            </a>
+            <a
+              href="https://www.linkedin.com/"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 block text-sm hover:text-white transition-colors"
+            >
+              LinkedIn
             </a>
             <Link
               href="/client-access"
@@ -75,7 +81,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 border-t border-deep-blue pt-6 text-xs text-slate">
-          &copy; {year} ByteStream Strategies. All rights reserved.
+          © 2026 ByteStream Strategies Inc.
         </div>
       </div>
     </footer>

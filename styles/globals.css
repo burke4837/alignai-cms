@@ -101,10 +101,10 @@
   }
 
   .hero-title {
-    @apply font-heading font-extrabold tracking-[-0.028em] text-white;
+    @apply font-heading font-bold tracking-heading text-white;
   }
 
   .hero-highlight {
-    @apply font-heading font-extrabold tracking-[-0.028em] text-cyan;
+    @apply font-heading font-bold tracking-heading text-cyan;
   }
 }

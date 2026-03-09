@@ -35,7 +35,7 @@ const CREDENTIALS = [
   "PhD - Carleton University",
   "MBA - University of Ottawa",
   "PMP Certified",
-  "20+ Years Enterprise",
+  "30+ Years Enterprise",
 ];
 
 export default function HomePage() {
@@ -52,20 +52,19 @@ export default function HomePage() {
             Most enterprises have no governance over that layer.
           </p>
           <p className="mt-6 max-w-prose text-base text-light-slate">
-            AlignAI governs the AI Decision Influence Layer - the environment
-            created by AI systems before humans make decisions. Built for
-            enterprise. Grounded in doctoral research.
+            ByteStream Strategies helps enterprise leaders build the governance
+            architecture that traditional AI frameworks miss.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/framework"
               className="inline-block rounded-btn bg-mid-blue px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-cyan"
             >
-              Explore the framework →
+              Explore the AlignAI framework →
             </Link>
             <Link
               href="/contact"
-              className="inline-block rounded-btn border border-deep-blue bg-transparent px-6 py-3 text-sm font-medium text-light-slate transition-colors hover:border-mid-blue hover:text-white"
+              className="inline-block rounded-btn bg-[#1b3359] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-mid-blue"
             >
               Start a conversation →
             </Link>

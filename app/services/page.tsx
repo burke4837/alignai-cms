@@ -4,7 +4,7 @@ import { CTASection } from "@/components/CTASection";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "AlignAI offers AI governance advisory, decision visibility assessments, compliance mapping, implementation support, and ongoing monitoring.",
+    "The AI Decision Visibility Assessment is a structured 4–6 week engagement covering one business domain.",
 };
 
 const PROCESS_STEPS = [
@@ -71,14 +71,13 @@ const DELIVERABLES = [
 export default function ServicesPage() {
   return (
     <>
-      <section className="bg-navy pt-32 pb-20">
+      <section className="hero-panel pt-32 pb-20">
         <div className="container-main">
           <h1 className="max-w-3xl text-4xl text-white md:text-5xl">
-            Services
+            The AI Decision Visibility Assessment.
           </h1>
           <p className="mt-6 max-w-prose text-lg text-light-slate">
-            From initial assessment to ongoing governance, we provide the
-            strategic advisory and implementation support enterprises need.
+            A 4-6 week structured engagement covering one business domain.
           </p>
         </div>
       </section>
@@ -91,17 +90,24 @@ export default function ServicesPage() {
             {/* Process Steps */}
             <div>
               <h2 className="text-2xl text-navy md:text-3xl">Our Process</h2>
+              <div className="mt-5 flex flex-wrap gap-2">
+                <span className="rounded-btn bg-white px-3 py-1 text-xs font-medium text-deep-blue border border-light-slate">One Business Domain</span>
+                <span className="rounded-btn bg-white px-3 py-1 text-xs font-medium text-deep-blue border border-light-slate">4–6 Weeks</span>
+                <span className="rounded-btn bg-white px-3 py-1 text-xs font-medium text-deep-blue border border-light-slate">Executive Readout</span>
+              </div>
               <ol className="mt-10 space-y-10">
                 {PROCESS_STEPS.map((step) => (
-                  <li key={step.number} className="flex gap-5">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-mid-blue font-heading text-sm font-bold text-white">
-                      {step.number}
-                    </span>
+                  <li key={step.number} className="border-t border-light-slate pt-6">
+                    <div className="flex gap-5">
+                      <span className="font-heading text-xl font-bold text-mid-blue">
+                        {step.number.toString().padStart(2, "0")}
+                      </span>
                     <div>
                       <h3 className="font-semibold text-navy">{step.title}</h3>
                       <p className="mt-1 text-sm leading-relaxed text-slate">
                         {step.description}
                       </p>
+                    </div>
                     </div>
                   </li>
                 ))}
@@ -115,7 +121,7 @@ export default function ServicesPage() {
                 {DELIVERABLES.map((item) => (
                   <li
                     key={item.title}
-                    className="border-l-2 border-mid-blue pl-5"
+                    className="border-l-[3px] border-mid-blue bg-white px-5 py-4"
                   >
                     <h3 className="font-semibold text-navy">{item.title}</h3>
                     <p className="mt-1 text-sm leading-relaxed text-slate">

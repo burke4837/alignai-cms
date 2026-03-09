@@ -6,11 +6,25 @@ interface BlogCardProps {
   tag: string;
   excerpt: string;
   slug: string;
+  featured?: boolean;
 }
 
-export function BlogCard({ title, date, tag, excerpt, slug }: BlogCardProps) {
+export function BlogCard({
+  title,
+  date,
+  tag,
+  excerpt,
+  slug,
+  featured = false,
+}: BlogCardProps) {
   return (
-    <article className="flex flex-col rounded-btn border border-light-slate bg-white p-6">
+    <article
+      className={`group flex flex-col rounded-btn border border-light-slate bg-white p-6 ${
+        featured
+          ? "border-t-4 border-t-cyan"
+          : "border-t-4 border-t-white hover:border-t-mid-blue"
+      }`}
+    >
       <div className="flex items-center gap-3 text-xs">
         <span className="rounded-btn bg-off-white px-2 py-1 font-medium text-deep-blue">
           {tag}
@@ -29,9 +43,9 @@ export function BlogCard({ title, date, tag, excerpt, slug }: BlogCardProps) {
       </p>
       <Link
         href={`/insights/${slug}`}
-        className="mt-4 inline-block text-sm font-medium text-mid-blue hover:text-deep-blue transition-colors"
+        className="mt-4 inline-block text-sm font-medium text-mid-blue transition-colors group-hover:text-deep-blue"
       >
-        Read more &rarr;
+        Read →
       </Link>
     </article>
   );

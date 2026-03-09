@@ -8,8 +8,8 @@ export function CTASection() {
           Ready to understand what your AI is actually deciding?
         </h2>
         <p className="mx-auto mt-4 max-w-prose text-sm text-light-slate">
-          No platform migration. No policy paperwork. Just governance
-          architecture grounded in visibility.
+          No platform required. No prior governance work needed. One
+          conversation to establish whether there is a fit.
         </p>
         <Link
           href="/contact"

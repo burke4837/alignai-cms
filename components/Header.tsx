@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/framework", label: "Framework" },
+  { href: "/framework", label: "The Framework" },
   { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
   { href: "/insights", label: "Insights" },
@@ -43,9 +43,9 @@ export function Header() {
         <Link
           href="/"
           className="font-heading text-base font-bold text-white"
-          aria-label="AlignAI home"
+          aria-label="ByteStream Strategies home"
         >
-          Align<span className="text-cyan">AI</span>
+          ByteStream <span className="text-cyan">Strategies</span>
         </Link>
 
         <nav className="hidden md:block" aria-label="Primary navigation">
@@ -54,7 +54,7 @@ export function Header() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`relative pb-1 text-[10px] font-semibold uppercase tracking-[0.1em] transition-colors ${
+                  className={`relative pb-1 text-[13px] font-semibold uppercase tracking-[0.07em] transition-colors ${
                     isActive(link.href)
                       ? "text-white after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-cyan"
                       : "text-light-slate hover:text-white"

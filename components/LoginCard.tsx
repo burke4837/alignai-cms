@@ -15,18 +15,18 @@ export function LoginCard() {
       <span className="absolute -top-4 left-6 rounded-btn bg-cyan px-3 py-1 text-xs font-semibold text-navy">
         Invitation Only
       </span>
-      <div className="rounded-btn border border-light-slate bg-white p-8 shadow-lg">
-        <h2 className="font-heading text-xl font-semibold text-navy">
+      <div className="rounded-[8px] border border-[rgba(99,188,231,0.35)] bg-[#0f2647] p-8">
+        <h2 className="font-heading text-xl font-semibold text-white">
           Client Access
         </h2>
-        <p className="mt-2 text-sm text-slate">
+        <p className="mt-2 text-sm text-light-slate">
           Sign in to your secure project portal.
         </p>
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
             <label
               htmlFor="login-email"
-              className="block text-sm font-medium text-navy"
+              className="block text-sm font-medium text-light-slate"
             >
               Email
             </label>
@@ -35,7 +35,7 @@ export function LoginCard() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-btn border border-light-slate px-4 py-2 text-sm text-navy outline-none focus:border-mid-blue focus:ring-1 focus:ring-mid-blue"
+              className="mt-1 w-full rounded-btn border border-deep-blue bg-navy px-4 py-2 text-sm text-white outline-none focus:border-mid-blue focus:ring-1 focus:ring-mid-blue"
               placeholder="you@company.com"
               autoComplete="email"
             />
@@ -43,7 +43,7 @@ export function LoginCard() {
           <div>
             <label
               htmlFor="login-password"
-              className="block text-sm font-medium text-navy"
+              className="block text-sm font-medium text-light-slate"
             >
               Password
             </label>
@@ -52,7 +52,7 @@ export function LoginCard() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-btn border border-light-slate px-4 py-2 text-sm text-navy outline-none focus:border-mid-blue focus:ring-1 focus:ring-mid-blue"
+              className="mt-1 w-full rounded-btn border border-deep-blue bg-navy px-4 py-2 text-sm text-white outline-none focus:border-mid-blue focus:ring-1 focus:ring-mid-blue"
               placeholder="Enter your password"
               autoComplete="current-password"
             />
@@ -64,7 +64,7 @@ export function LoginCard() {
             Sign In
           </button>
         </form>
-        <p className="mt-4 text-center text-xs text-slate">
+        <p className="mt-4 text-center text-xs text-light-slate">
           Access is granted by invitation. Contact us for details.
         </p>
       </div>

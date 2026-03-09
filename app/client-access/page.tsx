@@ -10,21 +10,20 @@ export const metadata: Metadata = {
 export default function ClientAccessPage() {
   return (
     <>
-      <section className="bg-navy pt-32 pb-20">
+      <section className="hero-panel pt-32 pb-20">
         <div className="container-main">
           <h1 className="text-center text-4xl text-white md:text-5xl">
-            Client Access
+            Client & Partner Access
           </h1>
           <p className="mx-auto mt-6 max-w-prose text-center text-lg text-light-slate">
-            Access your project deliverables, governance reports, and ongoing
-            assessments.
+            Secure access to your AlignAI workspace, reports, and resources.
           </p>
         </div>
       </section>
 
       <div className="section-divider" />
 
-      <section className="bg-off-white py-20">
+      <section className="bg-navy py-20">
         <div className="container-main">
           <LoginCard />
         </div>
