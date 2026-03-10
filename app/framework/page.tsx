@@ -10,33 +10,56 @@ export const metadata: Metadata = {
 const PILLARS = [
   {
     number: "01",
-    title: "Transparency & Explainability",
+    title: "Strategic Alignment",
     description:
-      "Ensure every AI-driven decision can be explained to stakeholders, regulators, and end-users in clear, non-technical terms.",
+      "Ensure AI initiatives operate within enterprise strategy. Establish governance authority, investment gating, and executive ownership over the AI decision environment.",
   },
   {
     number: "02",
-    title: "Accountability Structures",
+    title: "Decision Visibility",
     description:
-      "Define clear ownership, escalation paths, and responsibility matrices for AI systems across the organization.",
+      "Map every location where AI systems influence operational decisions before humans act. Build the decision influence register your organization does not have yet.",
   },
   {
     number: "03",
-    title: "Regulatory Compliance",
+    title: "Risk Classification",
     description:
-      "Map AI operations to current and emerging regulatory frameworks including EU AI Act, NIST AI RMF, and sector-specific requirements.",
+      "Establish governance tiers based on operational and regulatory exposure. Not every AI touchpoint requires the same level of control, but every one requires classification.",
   },
   {
     number: "04",
-    title: "Risk Assessment & Management",
+    title: "Oversight Structures",
     description:
-      "Implement systematic risk identification, scoring, and mitigation strategies tailored to AI-specific failure modes.",
+      "Define the monitoring, review cadence, override paths, and evidence requirements for each AI-influenced decision domain.",
   },
   {
     number: "05",
-    title: "Continuous Monitoring",
+    title: "Executive Accountability",
     description:
-      "Establish ongoing performance tracking, drift detection, and governance reporting to maintain alignment over time.",
+      "Assign named ownership for every AI-influenced decision domain. Leadership must be able to answer: who is responsible when AI-influenced decision causes harm?",
+  },
+];
+
+const MODEL_LAYERS = [
+  {
+    label: "Foundation",
+    title: "Enterprise Operations",
+  },
+  {
+    label: "Layer 2",
+    title: "AI Systems (Yardi, Copilot, LLMs, etc.)",
+  },
+  {
+    label: "The Gap",
+    title: "AI Decision Influence Layer",
+  },
+  {
+    label: "AlignAI",
+    title: "Governance Architecture",
+  },
+  {
+    label: "Outcome",
+    title: "Responsible AI Adoption",
   },
 ];
 
@@ -44,15 +67,16 @@ export default function FrameworkPage() {
   return (
     <>
       {/* Hero */}
-      <section className="hero-panel pt-32 pb-20">
-        <div className="container-main">
-          <h1 className="max-w-4xl text-4xl text-white md:text-5xl">
-            Governance architecture for the layer where AI actually changes
-            enterprise behaviour.
+      <section className="hero-panel md:h-screen pt-32 pb-20">
+        <div className="container-main mt-32">
+          <p className="hero-kicker">The Framework</p>
+          <h1 className="mt-5 max-w-3xl text-4xl text-white md:text-6xl">
+            Governance architecture for the layer most frameworks <span className="text-mid-blue">miss.</span>
           </h1>
-          <p className="mt-6 max-w-prose text-lg text-light-slate">
-            AlignAI governs the AI Decision Influence Layer — the environment
-            created by AI systems before humans make decisions.
+          <p className="mt-6 max-w-prose text-base text-light-slate">
+            AlignAI defines the structural controls for the AI decision
+            environment your organization has already created - but policies,
+            not coherent architecture.
           </p>
         </div>
       </section>
@@ -62,24 +86,40 @@ export default function FrameworkPage() {
       {/* Timeline */}
       <section className="bg-navy py-20">
         <div className="container-main">
-          <div className="relative mx-auto max-w-4xl">
-            <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-mid-blue" aria-hidden="true" />
-            <ol className="space-y-16">
+          <p className="hero-kicker">Five Governance Pillars</p>
+          <h2 className="mt-4 max-w-3xl text-4xl leading-[1.03] text-white md:text-6xl">
+            Not a checklist. Not a policy. An architecture.
+          </h2>
+          <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-light-slate">
+            Each pillar addresses a structural gap in how enterprises govern
+            AI-influenced decisions. Together they form a complete governance
+            architecture for the decision influence layer.
+          </p>
+
+          <div className="relative mt-12 max-w-5xl">
+
+            <ol>
               {PILLARS.map((pillar) => (
                 <li
                   key={pillar.number}
-                  className="relative grid gap-6 md:grid-cols-[1fr_48px_1fr] md:items-start"
+                  className="relative grid gap-4 md:grid-cols-[240px_1fr] md:items-start"
                 >
-                  <h3 className="text-right text-lg font-semibold text-white md:pr-8">
-                    {pillar.title}
-                  </h3>
-                  <span
-                    className="z-10 mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-cyan bg-deep-blue font-heading text-sm font-bold text-white"
-                    aria-hidden="true"
-                  >
-                    {pillar.number}
-                  </span>
-                  <p className="max-w-prose text-sm leading-relaxed text-light-slate md:pl-8">
+                  <div className="md:pr-6 md:text-right md:pt-8">
+                    <p className="text-[10px] font-semibold tracking-[0.07em] text-cyan">
+                      {pillar.number}
+                    </p>
+                    <h3 className="mt-2 text-xl font-semibold leading-tight text-white">
+                      {pillar.title}
+                    </h3>
+                  </div>
+
+                  <p className="max-w-3xl relative border-l-2 border-l-deep-blue border-t border-b border-t-[#12335a] border-b-[#12335a] py-8 pl-8 text-[15px] leading-relaxed text-light-slate first:border-t first:border-t-[#12335a]">
+                    <span
+                      className="z-10 absolute -left-2 top-0 p-0 mx-auto mt-9 flex h-3.5 w-3.5 items-center justify-center rounded-full border-[3px] border-cyan bg-navy"
+                      aria-hidden="true"
+                    >
+                      <span className="block h-2 w-2 rounded-full bg-navy" />
+                    </span>
                     {pillar.description}
                   </p>
                 </li>
@@ -94,33 +134,45 @@ export default function FrameworkPage() {
       {/* Conceptual Model */}
       <section className="bg-off-white py-20">
         <div className="container-main">
-          <h2 className="text-center text-3xl text-navy">Conceptual Model</h2>
-          <p className="mx-auto mt-4 max-w-prose text-slate">
-            The AlignAI framework operates as an integrated cycle — each pillar
-            reinforces the others to create a self-sustaining governance system.
+          <p className="hero-kicker text-mid-blue">The Conceptual Model</p>
+          <h2 className="mt-3 max-w-2xl text-4xl text-navy md:text-5xl">
+            Where AlignAI sits in the enterprise AI stack.
+          </h2>
+          <p className="mt-4 max-w-prose text-sm text-slate">
+            A practical view of how governance architecture integrates with AI
+            systems, decision environments, and executive oversight.
           </p>
-          <div className="mx-auto mt-12 grid max-w-3xl gap-4 md:grid-cols-2">
-              {PILLARS.map((pillar) => (
+
+          <div className="relative mt-10 max-w-4xl">
+            <div
+              className="absolute left-8 top-12 bottom-10 hidden w-[3px] bg-[#1e4f89] md:block"
+              aria-hidden="true"
+            />
+            <div className="space-y-7 max-w-2xl">
+              {MODEL_LAYERS.map((layer) => (
                 <div
-                  key={pillar.number}
-                  className="rounded-btn border border-light-slate bg-white p-4"
+                  key={layer.label}
+                  className="relative border-l-[3px] border-mid-blue bg-[#dde8f3] px-8 py-6 md:ml-2"
                 >
-                  <span className="block font-heading text-sm font-bold text-mid-blue">
-                    {pillar.number}
-                  </span>
-                  <span className="mt-1 block text-sm font-medium text-navy">
-                    {pillar.title}
-                  </span>
+                  <p className="text-xs font-bold uppercase tracking-[0.07em] text-cyan">
+                    {layer.label}
+                  </p>
+                  <p className="mt-2 text-[38px] font-semibold text-mid-blue md:text-sm">
+                    {layer.title}
+                  </p>
                 </div>
               ))}
-            <div className="rounded-btn border border-mid-blue bg-[#dce8f5] p-4 text-center text-sm font-semibold text-deep-blue md:col-span-2">
-              Continuous governance flow across all five pillars
             </div>
           </div>
+
+          <a
+            href="/contact"
+            className="mt-10 inline-flex w-full max-w-[360px] items-center justify-center rounded-btn bg-mid-blue px-6 py-4 text-sm font-semibold tracking-[0.03em] text-white transition-colors hover:bg-deep-blue"
+          >
+            See how an assessment works →
+          </a>
         </div>
       </section>
-
-      <div className="section-divider" />
 
       <CTASection />
     </>

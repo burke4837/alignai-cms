@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CTASection } from "@/components/CTASection";
 
 export const metadata: Metadata = {
@@ -10,74 +11,78 @@ export const metadata: Metadata = {
 const PROCESS_STEPS = [
   {
     number: 1,
-    title: "Discovery & Assessment",
+    title: "Scoping & Domain Selection",
     description:
-      "We audit your current AI landscape — models, data pipelines, decision points, and stakeholder impact.",
+      "Define the business domain, key AI systems in scope, and stakeholder group.",
   },
   {
     number: 2,
-    title: "Gap Analysis",
+    title: "Decision Influence Mapping",
     description:
-      "Map existing practices against the AlignAI Framework to identify governance, compliance, and transparency gaps.",
+      "Structured sessions to identify every point where AI shapes decisions.",
   },
   {
     number: 3,
-    title: "Strategy Development",
+    title: "Gap Analysis & Classification",
     description:
-      "Design a tailored governance roadmap with prioritized actions, ownership assignments, and timelines.",
+      "Evaluate current governance against what the influence map requires.",
   },
   {
     number: 4,
-    title: "Implementation Support",
+    title: "Deliverable Production",
     description:
-      "Hands-on guidance to integrate governance structures into engineering workflows, review processes, and reporting.",
+      "Produce decision register, risk classification, and governance architecture outputs.",
   },
   {
     number: 5,
-    title: "Monitoring & Iteration",
+    title: "Executive Readout",
     description:
-      "Establish continuous monitoring dashboards and periodic review cycles to sustain governance over time.",
+      "Present findings, ownership structure, and implementation roadmap.",
   },
 ];
 
 const DELIVERABLES = [
   {
-    title: "AI Decision Visibility Assessment",
+    title: "AI Decision Influence Map",
     description:
-      "A comprehensive evaluation of how AI decisions are made, documented, and communicated within your organization.",
+      "A structured register of every location where AI is shaping decisions within the domain scope.",
   },
   {
-    title: "Governance Framework Blueprint",
+    title: "Governance Gap Analysis",
     description:
-      "A custom governance framework document aligned to your industry, regulatory requirements, and organizational structure.",
+      "A documented assessment of what governance architecture exists versus what the influence map requires.",
   },
   {
-    title: "Compliance Readiness Report",
+    title: "Ownership and Accountability Matrix",
     description:
-      "Detailed mapping of your AI systems against EU AI Act, NIST AI RMF, and relevant sector-specific regulations.",
+      "Named owners and accountability assignments for each AI-influenced decision domain identified.",
   },
   {
-    title: "Risk & Impact Assessment",
+    title: "Risk Classification Register",
     description:
-      "Systematic identification and scoring of AI-specific risks with prioritized mitigation recommendations.",
+      "Tiered risk classification of all AI decision touchpoints based on operational and regulatory exposure.",
   },
   {
-    title: "Executive Briefing Package",
+    title: "Governance Architecture Roadmap",
     description:
-      "Board-ready materials that communicate AI governance posture, risks, and strategic recommendations.",
+      "A sequenced roadmap for closing identified governance gaps with implementation priorities.",
   },
 ];
 
 export default function ServicesPage() {
   return (
     <>
-      <section className="hero-panel pt-32 pb-20">
+      <section className="hero-panel pt-40 h-[95vh] pb-24">
         <div className="container-main">
-          <h1 className="max-w-3xl text-4xl text-white md:text-5xl">
-            The AI Decision Visibility Assessment.
+          <p className="hero-kicker">The Entry Point</p>
+          <h1 className="mt-6 max-w-4xl text-[52px] leading-[1.05] text-white md:text-[74px]">
+            The AI Decision Visibility
+            <span className="block text-cyan">Assessment.</span>
           </h1>
-          <p className="mt-6 max-w-prose text-lg text-light-slate">
+          <p className="mt-8 max-w-prose text-[16px] leading-[1.7] text-light-slate">
             A 4-6 week structured engagement covering one business domain.
+            Stands alone as a governance diagnostic, or becomes the foundation
+            for broader architecture work.
           </p>
         </div>
       </section>
@@ -86,47 +91,79 @@ export default function ServicesPage() {
 
       <section className="bg-off-white py-20">
         <div className="container-main">
-          <div className="grid gap-16 lg:grid-cols-2">
+          <div className="grid gap-16 lg:grid-cols-2 lg:gap-14">
             {/* Process Steps */}
             <div>
-              <h2 className="text-2xl text-navy md:text-3xl">Our Process</h2>
-              <div className="mt-5 flex flex-wrap gap-2">
-                <span className="rounded-btn bg-white px-3 py-1 text-xs font-medium text-deep-blue border border-light-slate">One Business Domain</span>
-                <span className="rounded-btn bg-white px-3 py-1 text-xs font-medium text-deep-blue border border-light-slate">4–6 Weeks</span>
-                <span className="rounded-btn bg-white px-3 py-1 text-xs font-medium text-deep-blue border border-light-slate">Executive Readout</span>
+              <p className="hero-kicker text-mid-blue">The Engagement</p>
+              <h2 className="mt-4 text-2xl leading-tight text-navy">
+                A structured engagement. A standing deliverable.
+              </h2>
+              <p className="mt-6 max-w-prose text-[15px] leading-relaxed text-slate">
+                The Assessment is delivered through ByteStream Strategies. No
+                platform required. No implementation prerequisite. Applicable
+                regardless of what AI systems you currently use.
+              </p>
+              <p className="mt-4 max-w-prose text-[15px] leading-relaxed text-slate">
+                It stands alone as a governance diagnostic, or it becomes the
+                foundation for broader architecture work under the AlignAI
+                framework.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="rounded-btn border border-light-slate bg-mid-blue/5 px-3 py-1 text-xs font-medium text-slate">4-6 weeks</span>
+                <span className="rounded-btn border border-light-slate bg-mid-blue/5 px-3 py-1 text-xs font-medium text-slate">One business domain</span>
+                <span className="rounded-btn border border-light-slate bg-mid-blue/5 px-3 py-1 text-xs font-medium text-slate">Fixed scope</span>
+                <span className="rounded-btn border border-light-slate bg-mid-blue/5 px-3 py-1 text-xs font-medium text-slate">Five deliverables</span>
+                <span className="rounded-btn border border-light-slate bg-mid-blue/5 px-3 py-1 text-xs font-medium text-slate">Platform-agnostic</span>
               </div>
-              <ol className="mt-10 space-y-10">
-                {PROCESS_STEPS.map((step) => (
-                  <li key={step.number} className="border-t border-light-slate pt-6">
-                    <div className="flex gap-5">
-                      <span className="font-heading text-xl font-bold text-mid-blue">
+
+              <p className="hero-kicker mt-10 text-xl text-mid-blue">How It Works</p>
+              <ol className="mt-6 border-light-slate">
+                {PROCESS_STEPS.map((step, index) => (
+                  <li key={step.number} className={`border-light-slate py-5 ${index > 0 ? "border-t" : ""}`}>
+                    <div className="flex gap-4">
+                      <span className="mt-0.5 font-heading text-[18px] font-bold text-mid-blue">
                         {step.number.toString().padStart(2, "0")}
                       </span>
-                    <div>
-                      <h3 className="font-semibold text-navy">{step.title}</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-slate">
-                        {step.description}
-                      </p>
-                    </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-navy">
+                          {step.title}
+                        </h3>
+                        <p className="mt-1 text-sm leading-relaxed text-slate">
+                          {step.description}
+                        </p>
+                      </div>
                     </div>
                   </li>
                 ))}
               </ol>
+
+              <Link
+                href="/contact"
+                className="mt-8 inline-flex rounded-btn bg-mid-blue px-10 py-4 text-base font-semibold text-white transition-colors hover:bg-deep-blue"
+              >
+                Start a conversation →
+              </Link>
             </div>
 
             {/* Deliverables */}
             <div>
-              <h2 className="text-2xl text-navy md:text-3xl">Deliverables</h2>
-              <ul className="mt-10 space-y-8">
-                {DELIVERABLES.map((item) => (
+              <p className="hero-kicker text-mid-blue">Five Deliverables</p>
+              <h2 className="mt-4 text-4xl text-navy">Deliverables</h2>
+              <ul className="mt-6 space-y-1">
+                {DELIVERABLES.map((item, index) => (
                   <li
                     key={item.title}
-                    className="border-l-[3px] border-mid-blue bg-white px-5 py-4"
+                    className={`grid grid-cols-[44px_1fr] gap-1 border-l-[3px] border-mid-blue bg-[#e9edf3] px-4 py-5 
+                      `}
                   >
-                    <h3 className="font-semibold text-navy">{item.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-slate">
-                      {item.description}
-                    </p>
+                    <span className="pt-0.5 text-xs font-semibold text-mid-blue">
+                      {(index + 1).toString().padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 className="text-xl font-semibold text-navy">{item.title}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-slate">{item.description}</p>
+                    </div>
                   </li>
                 ))}
               </ul>

@@ -4,7 +4,6 @@ import Link from "next/link";
 export function Footer() {
   return (
     <footer className="bg-[#08162e] text-light-slate">
-      <div className="section-divider" />
       <div className="container-main py-14">
         <div className="grid gap-10 md:grid-cols-3">
           <div className="max-w-[300px]">
@@ -13,7 +12,7 @@ export function Footer() {
               className="font-heading text-base font-bold text-white"
               aria-label="ByteStream Strategies home"
             >
-            <Image src="/brand/logo-bg-black.png" alt="AlignAI Logo" width={150} height={150} />
+              <Image src="/brand/logo-bg-black.png" alt="AlignAI Logo" width={150} height={150} />
             </Link>
             <p className="mt-3 text-sm leading-relaxed text-slate">
               Governance architecture for AI-influenced enterprise decisions.
@@ -28,42 +27,42 @@ export function Footer() {
             <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate">
               Navigation
             </p>
-            <ul className="mt-3 space-y-2 text-sm">
+            <ul className="mt-3 space-y-5 text-sm">
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
+                <Link href="/" className="hover:text-white text-zinc-500 transition-colors">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/framework" className="hover:text-white transition-colors">
+                <Link href="/framework" className="hover:text-white text-zinc-500 transition-colors">
                   The Framework
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="hover:text-white transition-colors">
+                <Link href="/services" className="hover:text-white text-zinc-500 transition-colors">
                   Services
                 </Link>
               </li>
               <li>
-                <Link href="/insights" className="hover:text-white transition-colors">
+                <Link href="/insights" className="hover:text-white text-zinc-500 transition-colors">
                   Insights
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-white transition-colors">
+                <Link href="/contact" className="hover:text-white text-zinc-500 transition-colors">
                   Contact
                 </Link>
               </li>
             </ul>
           </nav>
 
-          <div className="md:justify-self-end">
+          <div className="md:justify-self-end space-y-4">
             <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate">
               Contact
             </p>
             <a
               href="mailto:bburke@bytestream.ca"
-              className="mt-3 block text-sm hover:text-white transition-colors"
+              className=" block text-sm hover:text-white text-zinc-500 transition-colors"
             >
               bburke@bytestream.ca
             </a>
@@ -71,21 +70,28 @@ export function Footer() {
               href="https://www.linkedin.com/"
               target="_blank"
               rel="noreferrer"
-              className="mt-2 block text-sm hover:text-white transition-colors"
+              className=" block text-sm hover:text-white text-zinc-500 transition-colors"
             >
               LinkedIn
             </a>
             <Link
               href="/client-access"
-              className="mt-2 inline-block text-sm hover:text-white transition-colors"
+              className=" inline-block text-sm hover:text-white text-zinc-500 transition-colors"
             >
               Client Access
             </Link>
           </div>
         </div>
 
-        <div className="mt-10 border-t border-deep-blue pt-6 text-xs text-slate">
-          © 2026 ByteStream Strategies Inc.
+        <div className="flex justify-between">
+          <div className="mt-10 pt-6 text-xs text-slate">
+            © 2026 ByteStream Strategies Inc.
+          </div>
+
+          <div className="mt-10 pt-6 text-xs text-slate">
+            <span>✦</span> AlignAI is a proprietary framework developed by ByteStream Strategies Inc.
+          </div>
+
         </div>
       </div>
     </footer>

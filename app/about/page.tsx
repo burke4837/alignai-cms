@@ -11,24 +11,21 @@ const CREDENTIALS = [
   "PhD",
   "MBA",
   "PMP",
-  "Enterprise Transformation",
-  "AI Governance Architecture",
-  "Regulatory Readiness",
+  "30+ Years Enterprise",
 ];
 
 export default function AboutPage() {
   return (
     <>
-      <section className="hero-panel pt-32 pb-20">
+      <section className="hero-panel h-[80vh] pt-40 pb-20 md:pb-24">
         <div className="container-main">
-          <h1 className="max-w-4xl text-4xl text-white md:text-5xl">
-            Built from doctoral research. Delivered with 30 years of enterprise
-            experience.
+          <p className="hero-kicker">The Founder</p>
+          <h1 className="mt-6 max-w-4xl text-4xl leading-[1.06] text-white md:text-6xl">
+            Built from doctoral research.
+            <span className="block text-cyan">
+              Delivered with 30 years of enterprise experience.
+            </span>
           </h1>
-          <p className="mt-6 max-w-prose text-lg text-light-slate">
-            Brian Burke, PhD, MBA, PMP — AI Governance Architect and founder of
-            ByteStream Strategies.
-          </p>
         </div>
       </section>
 
@@ -36,63 +33,80 @@ export default function AboutPage() {
 
       <section className="bg-off-white py-20">
         <div className="container-main">
-          <div className="grid gap-16 lg:grid-cols-2">
+          <div className="grid gap-12 lg:grid-cols-[260px_1fr] lg:gap-14">
             {/* Photo Placeholder */}
-            <div className="flex items-start justify-center">
-              <div className="flex aspect-[3/4] w-full max-w-sm items-center justify-center rounded-btn bg-deep-blue">
-                <span className="text-sm text-light-slate">
-                  [CLIENT PHOTO — TO BE SUPPLIED]
-                </span>
+            <div className="flex items-start justify-start">
+              <div className="flex aspect-[3/4] w-full max-w-[250px] items-center justify-center rounded-btn bg-deep-blue">
+                <div className="text-center text-light-slate">
+                  <svg
+                    className="mx-auto mb-3"
+                    width="34"
+                    height="34"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.33 0-8 2.17-8 5v1h16v-1c0-2.83-3.67-5-8-5Z" />
+                  </svg>
+                  <p className="text-xs">Headshot</p>
+                  <p className="text-xs">to be supplied</p>
+                </div>
               </div>
             </div>
 
             {/* Bio */}
             <div>
-              <h2 className="text-2xl text-navy md:text-3xl">About Brian Burke</h2>
-              <div className="mt-6 max-w-prose space-y-4 text-slate">
-                <p>
-                  AlignAI by ByteStream Strategies was founded on the conviction
-                  that enterprise AI must be governed with the same rigor applied
-                  to financial controls and data privacy.
-                </p>
-                <p>
-                  We work with C-suite leaders, AI teams, legal and compliance
-                  functions to design governance structures that do more than
-                  check boxes — they create genuine accountability and strategic
-                  advantage.
-                </p>
-                <p>
-                  Our approach combines deep technical understanding of AI
-                  systems with practical experience in enterprise risk
-                  management, regulatory affairs, and organizational change.
-                </p>
-              </div>
-
-              <h3 className="mt-10 text-lg font-semibold text-navy">
-                Areas of Expertise
-              </h3>
-              <div className="mt-4 flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2">
                 {CREDENTIALS.map((cred) => (
                   <span
                     key={cred}
-                    className="rounded-btn border border-light-slate bg-navy px-4 py-2 text-xs font-medium text-white"
+                    className="rounded-btn border border-light-slate bg-navy px-3 py-1 text-[11px] font-semibold text-white"
                   >
                     {cred}
                   </span>
                 ))}
               </div>
-              <div className="mt-8 flex flex-wrap gap-5">
+
+              <h2 className="mt-5 text-4xl text-navy">Brian Burke</h2>
+              <p className="mt-2 text-base font-semibold text-mid-blue">
+                AI Governance Architect · Founder, ByteStream Strategies Inc.
+              </p>
+
+              <div className="mt-6 max-w-prose space-y-4 text-slate">
+                <p>
+                  Brian Burke holds a PhD in Organizational and Systems
+                  Perspective from Carleton University, an MBA in Enterprise
+                  Governance and Strategy from the University of Ottawa, and is
+                  a certified Project Management Professional. He has more than
+                  30 years of enterprise consulting experience.
+                </p>
+                <p>
+                  His doctoral research examined the governance gap in how
+                  enterprises deploy large language models, specifically, the
+                  absence of structural controls over the AI Decision Influence
+                  Layer. AlignAI is the proprietary governance architecture
+                  framework developed from that research.
+                </p>
+                <p>
+                  ByteStream Strategies Inc. is the consulting entity through
+                  which the AlignAI framework is delivered. Brian works with
+                  enterprise leadership teams in real estate, financial
+                  services, and adjacent sectors.
+                </p>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-4">
                 <a
                   href="https://www.linkedin.com/"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-sm font-semibold text-mid-blue hover:text-deep-blue"
+                  className="inline-flex rounded-btn bg-mid-blue px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-deep-blue"
                 >
                   Connect on LinkedIn →
                 </a>
                 <a
                   href="mailto:bburke@bytestream.ca"
-                  className="text-sm font-semibold text-mid-blue hover:text-deep-blue"
+                  className="inline-flex rounded-btn border border-light-slate bg-white px-6 py-3 text-sm font-medium text-slate"
                 >
                   bburke@bytestream.ca
                 </a>
