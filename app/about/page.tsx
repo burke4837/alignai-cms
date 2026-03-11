@@ -17,7 +17,7 @@ const CREDENTIALS = [
 export default function AboutPage() {
   return (
     <>
-      <section className="hero-panel h-[80vh] pt-40 pb-20 md:pb-24">
+      <section className="hero-panel min-h-[65vh] pt-28 pb-16 md:min-h-[80vh] md:pt-40 md:pb-24">
         <div className="container-main">
           <p className="hero-kicker">The Founder</p>
           <h1 className="mt-6 max-w-4xl text-4xl leading-[1.06] text-white md:text-6xl">

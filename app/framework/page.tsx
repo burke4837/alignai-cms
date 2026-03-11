@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CTASection } from "@/components/CTASection";
 
 export const metadata: Metadata = {
@@ -67,7 +68,7 @@ export default function FrameworkPage() {
   return (
     <>
       {/* Hero */}
-      <section className="hero-panel md:h-screen pt-32 pb-20">
+      <section className="hero-panel md:h-screen md:pt-32 pb-20">
         <div className="container-main mt-32">
           <p className="hero-kicker">The Framework</p>
           <h1 className="mt-5 max-w-3xl text-4xl text-white md:text-6xl">
@@ -157,7 +158,7 @@ export default function FrameworkPage() {
                   <p className="text-xs font-bold uppercase tracking-[0.07em] text-cyan">
                     {layer.label}
                   </p>
-                  <p className="mt-2 text-[38px] font-semibold text-mid-blue md:text-sm">
+                  <p className="mt-2 text-base font-semibold text-mid-blue md:text-lg">
                     {layer.title}
                   </p>
                 </div>
@@ -165,12 +166,12 @@ export default function FrameworkPage() {
             </div>
           </div>
 
-          <a
+          <Link
             href="/contact"
             className="mt-10 inline-flex w-full max-w-[360px] items-center justify-center rounded-btn bg-mid-blue px-6 py-4 text-sm font-semibold tracking-[0.03em] text-white transition-colors hover:bg-deep-blue"
           >
             See how an assessment works →
-          </a>
+          </Link>
         </div>
       </section>
 

@@ -19,10 +19,6 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -39,14 +35,25 @@ export function Header() {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-600 bg-navy/95 backdrop-blur-sm">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 border-b border-zinc-600 ${
+        mobileOpen ? "bg-navy" : "bg-navy/95 backdrop-blur-sm"
+      }`}
+    >
       <div className="container-main flex h-[70px] items-center justify-between">
         <Link
           href="/"
           className="font-heading text-base font-bold text-white"
           aria-label="ByteStream Strategies home"
         >
-          <Image src="/brand/logo-bg-black.png" alt="AlignAI Logo" width={150} height={150} />
+          <Image
+            src="/brand/logo-bg-black.png"
+            alt="AlignAI Logo"
+            width={150}
+            height={150}
+            className="h-9 w-auto md:h-10"
+            priority
+          />
 
         </Link>
 
@@ -105,15 +112,15 @@ export function Header() {
       {mobileOpen && (
         <nav
           id="mobile-menu"
-          className="fixed inset-0 top-14 z-40 bg-navy md:hidden"
+          className="fixed inset-x-0 top-[70px] bottom-0 z-[60] bg-navy md:hidden"
           aria-label="Mobile navigation"
         >
-          <ul className="flex flex-col items-center justify-center gap-8 pt-20">
+          <ul className="flex min-h-full flex-col items-center justify-center gap-8 px-6 py-10">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`text-xl font-medium ${isActive(link.href) ? "text-cyan" : "text-white"
+                  className={`text-2xl font-semibold sm:text-3xl ${isActive(link.href) ? "text-cyan" : "text-white"
                     }`}
                   onClick={() => setMobileOpen(false)}
                 >

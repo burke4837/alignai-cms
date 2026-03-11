@@ -83,12 +83,12 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex justify-between">
-          <div className="mt-10 pt-6 text-xs text-slate">
+        <div className="mt-10 flex flex-col gap-2 border-t border-deep-blue pt-6 text-xs text-slate md:flex-row md:items-center md:justify-between">
+          <div>
             © 2026 ByteStream Strategies Inc.
           </div>
 
-          <div className="mt-10 pt-6 text-xs text-slate">
+          <div>
             <span>✦</span> AlignAI is a proprietary framework developed by ByteStream Strategies Inc.
           </div>
 

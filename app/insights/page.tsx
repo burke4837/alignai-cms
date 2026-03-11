@@ -116,7 +116,7 @@ export default function InsightsPage() {
             </p>
 
             <article className="mt-6 max-w-[760px]">
-              <h2 className="text-4xl leading-tight text-navy md:text-3xl">{samplePost.title}</h2>
+              <h2 className="text-3xl leading-tight text-navy md:text-4xl">{samplePost.title}</h2>
               <div className="mt-4 flex flex-wrap items-center gap-3 text-xs">
                 <span className="text-[#7b8392]">Brian Burke</span>
                 <span className="text-[#7b8392]">•</span>
@@ -129,7 +129,7 @@ export default function InsightsPage() {
               </div>
               <div className="mt-7 border-t border-[#cfd7e6] pt-7">
                 {samplePost.paragraphs.map((paragraph, index) => (
-                    <p key={index} className="mb-4 text-[15px] leading-[1.72] text-[#6f7785]">
+                    <p key={`${samplePost.slug}-${index}-${paragraph.slice(0, 24)}`} className="mb-4 text-[15px] leading-[1.72] text-[#6f7785]">
                       {paragraph}
                     </p>
                   ))}

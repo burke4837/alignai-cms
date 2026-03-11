@@ -70,7 +70,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="fixed bottom-[88px] right-7 z-50 flex w-80 flex-col overflow-hidden rounded-[8px] border border-[rgba(99,188,231,0.2)] shadow-2xl"
+      className="fixed inset-x-3 bottom-[96px] z-[70] flex w-auto max-w-[calc(100vw-24px)] flex-col overflow-hidden rounded-[8px] border border-[rgba(99,188,231,0.2)] shadow-2xl sm:inset-x-auto sm:right-7 sm:w-80 sm:max-w-80"
       role="dialog"
       aria-label="Chat with AlignAI"
     >
@@ -108,7 +108,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
       <div
         ref={scrollRef}
         className="flex-1 overflow-y-auto bg-navy p-4"
-        style={{ maxHeight: 360 }}
+        style={{ maxHeight: "min(52vh, 360px)" }}
       >
         {messages.map((msg, i) => (
           <div
@@ -118,7 +118,7 @@ export function ChatPanel({ onClose }: { onClose: () => void }) {
             }`}
           >
             <span
-              className={`inline-block rounded-btn px-3 py-2 text-sm leading-relaxed ${
+              className={`inline-block max-w-full rounded-btn px-3 py-2 text-sm leading-relaxed ${
                 msg.role === "user"
                   ? "bg-mid-blue text-white"
                   : "bg-deep-blue text-light-slate"

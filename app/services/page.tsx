@@ -72,10 +72,10 @@ const DELIVERABLES = [
 export default function ServicesPage() {
   return (
     <>
-      <section className="hero-panel pt-40 h-[95vh] pb-24">
+      <section className="hero-panel min-h-[72vh] pt-28 pb-16 md:min-h-[85vh] md:pt-36 md:pb-24">
         <div className="container-main">
           <p className="hero-kicker">The Entry Point</p>
-          <h1 className="mt-6 max-w-4xl text-[52px] leading-[1.05] text-white md:text-[74px]">
+          <h1 className="mt-6 max-w-4xl text-4xl leading-[1.05] text-white sm:text-5xl md:text-[74px]">
             The AI Decision Visibility
             <span className="block text-cyan">Assessment.</span>
           </h1>
