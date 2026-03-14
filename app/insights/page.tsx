@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CTASection } from "@/components/CTASection";
-import { getPosts, getFeaturedPosts } from "@/lib/posts";
 import { BlogCard } from "@/components/BlogCard";
+import { ModernCMS } from "@/lib/modern-cms";
+import { ContentStatus } from "@prisma/client";
 
 export const metadata: Metadata = {
   title: "Insights",
@@ -11,8 +12,8 @@ export const metadata: Metadata = {
 };
 
 export default async function InsightsPage() {
-  const posts = await getPosts();
-  const featuredPosts = await getFeaturedPosts();
+  const posts = await ModernCMS.getContents({ status: ContentStatus.PUBLISHED });
+  const featuredPosts = await ModernCMS.getContents({ status: ContentStatus.PUBLISHED, featured: true });
 
   const formatDate = (value: string) =>
     new Date(value)
@@ -48,7 +49,7 @@ export default async function InsightsPage() {
           <div className="mt-7 grid gap-0 border border-[#d9deea] bg-white md:grid-cols-3">
             {featuredPosts.map((post, index) => (
               <article
-                key={post._id}
+                key={post.id}
                 className={`p-5 ${
                   index === 0
                     ? "border-t-2 border-t-cyan"
@@ -68,7 +69,7 @@ export default async function InsightsPage() {
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-slate">{post.excerpt}</p>
                 <Link
-                  href={`/insights/${post.slug.current}`}
+                  href={`/insights/${post.slug}`}
                   className="mt-5 inline-block text-sm font-semibold text-mid-blue hover:text-deep-blue"
                 >
                   Read more →
@@ -85,12 +86,12 @@ export default async function InsightsPage() {
             <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {posts.map((post) => (
                 <BlogCard
-                  key={post._id}
+                  key={post.id}
                   title={post.title}
                   date={post.publishedAt}
-                  tag={post.categories[0]?.title || "Insights"}
+                  tag={post.category}
                   excerpt={post.excerpt}
-                  slug={post.slug.current}
+                  slug={post.slug}
                   featured={post.featured}
                 />
               ))}
