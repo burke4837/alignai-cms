@@ -1,19 +1,30 @@
+import { prisma } from './lib/prisma'
 
-import 'dotenv/config';
-import { prisma } from '../lib/prisma';
-
-async function main() {
+async function checkData() {
   try {
-    const pages = await prisma.page.findMany();
-    console.log('Pages in DB:', JSON.stringify(pages, null, 2));
+    console.log('--- PAGES ---')
+    const pages = await prisma.page.findMany()
+    pages.forEach(p => {
+      console.log(`- ${p.title} (${p.slug}): ${p.content.substring(0, 50)}...`)
+      if (p.metadata) {
+        console.log(`  Metadata keys: ${Object.keys(p.metadata as any).join(', ')}`)
+      }
+    })
     
-    const info = await prisma.info.findMany();
-    console.log('Info in DB:', JSON.stringify(info, null, 2));
-  } catch (e) {
-    console.error(e);
+    console.log('\n--- INFO ---')
+    const info = await prisma.info.findMany()
+    info.forEach(i => {
+      console.log(`- ${i.type}: ${i.title}`)
+    })
+
+    console.log('\n--- CATEGORIES ---')
+    const cats = await prisma.category.findMany()
+    console.log(`Total categories: ${cats.length}`)
+  } catch (error) {
+    console.error('Error checking data:', error)
   } finally {
-    process.exit(0);
+    await prisma.$disconnect()
   }
 }
 
-main();
+checkData()

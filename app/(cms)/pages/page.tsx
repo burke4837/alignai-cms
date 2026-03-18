@@ -35,11 +35,20 @@ export default function PagesManager() {
 
   const fetchPages = async () => {
     try {
+      setLoading(true)
       const res = await fetch('/api/cms/pages')
+      
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}))
+        throw new Error(errorData.details || `Server responded with ${res.status}`)
+      }
+
       const pagesData = await res.json()
+      console.log('Successfully fetched pages:', pagesData)
       setPages(Array.isArray(pagesData) ? pagesData : [])
-    } catch (error) {
-      console.error('Failed to fetch pages:', error)
+    } catch (error: any) {
+      console.error('CMS: Failed to fetch pages:', error)
+      // You could add a toast notification here if available
     } finally {
       setLoading(false)
     }

@@ -3,6 +3,7 @@ import { ModernCMS } from '@/lib/modern-cms'
 
 export async function GET(request: Request) {
   try {
+    console.log('GET /api/cms/posts - Parsing query parameters...')
     const { searchParams } = new URL(request.url)
     const type = searchParams.get('type')
     const status = searchParams.get('status')
@@ -18,11 +19,17 @@ export async function GET(request: Request) {
     const options: any = { ...filters }
     if (take) options.take = parseInt(take)
 
+    console.log('GET /api/cms/posts - Fetching contents with options:', options)
     const posts = await ModernCMS.getContents(options)
+    console.log(`GET /api/cms/posts - Successfully fetched ${posts.length} posts.`)
 
     return NextResponse.json({ posts })
   } catch (error: any) {
-    console.error('Posts API error:', error)
+    console.error('Posts API GET error:', {
+      message: error.message,
+      stack: error.stack,
+      code: error.code
+    })
     return NextResponse.json({ 
       error: 'Failed to fetch content',
       details: error.message || 'Unknown error',

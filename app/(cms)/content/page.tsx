@@ -57,18 +57,24 @@ export default function ContentManager() {
       let contentsData = { posts: [] }
       let categoriesData = { categories: [] }
 
-      try {
-        if (contentsRes.ok) contentsData = await contentsRes.json()
-      } catch (e) { console.error('Contents parse error', e) }
+      if (contentsRes.ok) {
+        contentsData = await contentsRes.json()
+      } else {
+        const err = await contentsRes.json().catch(() => ({}))
+        console.error('CMS: Failed to fetch posts:', err.details || contentsRes.status)
+      }
 
-      try {
-        if (categoriesRes.ok) categoriesData = await categoriesRes.json()
-      } catch (e) { console.error('Categories parse error', e) }
+      if (categoriesRes.ok) {
+        categoriesData = await categoriesRes.json()
+      } else {
+        const err = await categoriesRes.json().catch(() => ({}))
+        console.error('CMS: Failed to fetch categories:', err.details || categoriesRes.status)
+      }
       
       setContents(contentsData.posts || [])
       setCategories(categoriesData.categories || [])
-    } catch (error) {
-      console.error('Failed to fetch data:', error)
+    } catch (error: any) {
+      console.error('CMS: Failed to fetch data:', error)
     } finally {
       setLoading(false)
     }

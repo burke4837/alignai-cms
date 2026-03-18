@@ -31,11 +31,19 @@ export default function CategoriesManager() {
 
   const fetchCategories = async () => {
     try {
+      setLoading(true)
       const res = await fetch('/api/cms/categories')
+      
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}))
+        throw new Error(errorData.details || `Server responded with ${res.status}`)
+      }
+
       const data = await res.json()
+      console.log('Successfully fetched categories:', data)
       setCategories(data.categories || [])
-    } catch (error) {
-      console.error('Failed to fetch categories:', error)
+    } catch (error: any) {
+      console.error('CMS: Failed to fetch categories:', error)
     } finally {
       setLoading(false)
     }

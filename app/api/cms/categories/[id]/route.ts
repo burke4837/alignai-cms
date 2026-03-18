@@ -5,16 +5,23 @@ export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
   try {
-    const { id } = await params
+    console.log(`PATCH /api/cms/categories/${id} - Updating category...`)
     const body = await request.json()
     const updatedCategory = await ModernCMS.updateCategory(id, body)
+    console.log(`PATCH /api/cms/categories/${id} - Successfully updated category.`)
     return NextResponse.json({ category: updatedCategory })
   } catch (error: any) {
-    console.error('Update category error:', error)
+    console.error(`Categories API PATCH error (id: ${id}):`, {
+      message: error.message,
+      stack: error.stack,
+      code: error.code
+    })
     return NextResponse.json({ 
       error: 'Failed to update category',
-      details: error.message || 'Unknown error'
+      details: error.message || 'Unknown error',
+      code: error.code
     }, { status: 500 })
   }
 }
@@ -23,15 +30,22 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
   try {
-    const { id } = await params
+    console.log(`DELETE /api/cms/categories/${id} - Deleting category...`)
     await ModernCMS.deleteCategory(id)
+    console.log(`DELETE /api/cms/categories/${id} - Successfully deleted category.`)
     return NextResponse.json({ message: 'Category deleted successfully' })
   } catch (error: any) {
-    console.error('Delete category error:', error)
+    console.error(`Categories API DELETE error (id: ${id}):`, {
+      message: error.message,
+      stack: error.stack,
+      code: error.code
+    })
     return NextResponse.json({ 
       error: 'Failed to delete category',
-      details: error.message || 'Unknown error'
+      details: error.message || 'Unknown error',
+      code: error.code
     }, { status: 500 })
   }
 }

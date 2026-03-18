@@ -36,11 +36,19 @@ export default function InfoManager() {
 
   const fetchInfo = async () => {
     try {
+      setLoading(true)
       const res = await fetch('/api/cms/info')
+      
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}))
+        throw new Error(errorData.details || `Server responded with ${res.status}`)
+      }
+
       const infoData = await res.json()
+      console.log('Successfully fetched info items:', infoData)
       setInfoItems(Array.isArray(infoData) ? infoData : [])
-    } catch (error) {
-      console.error('Failed to fetch info:', error)
+    } catch (error: any) {
+      console.error('CMS: Failed to fetch info:', error)
     } finally {
       setLoading(false)
     }

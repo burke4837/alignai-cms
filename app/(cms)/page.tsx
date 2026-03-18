@@ -36,18 +36,24 @@ export default function ModernDashboard() {
       let statsData = { totalContents: 0, publishedContents: 0, draftContents: 0, totalPages: 0, publishedPages: 0, totalCategories: 0, totalUsers: 0 }
       let contentData = { posts: [] }
 
-      try {
-        if (statsRes.ok) statsData = await statsRes.json()
-      } catch (e) { console.error('Stats parse error', e) }
+      if (statsRes.ok) {
+        statsData = await statsRes.json()
+      } else {
+        const err = await statsRes.json().catch(() => ({}))
+        console.error('CMS: Failed to fetch stats:', err.details || statsRes.status)
+      }
 
-      try {
-        if (contentRes.ok) contentData = await contentRes.json()
-      } catch (e) { console.error('Content parse error', e) }
+      if (contentRes.ok) {
+        contentData = await contentRes.json()
+      } else {
+        const err = await contentRes.json().catch(() => ({}))
+        console.error('CMS: Failed to fetch recent posts:', err.details || contentRes.status)
+      }
       
       setStats(statsData)
       setRecentContent(contentData.posts || [])
-    } catch (error) {
-      console.error('Failed to fetch dashboard data:', error)
+    } catch (error: any) {
+      console.error('CMS: Failed to fetch dashboard data:', error)
     } finally {
       setLoading(false)
     }

@@ -6,8 +6,9 @@ export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params
   try {
-    const { id } = await params
+    console.log(`PATCH /api/cms/info/${id} - Updating info item...`)
     const body = await request.json()
     // For Info, we use the 'type' field as the identifier in upsert
     // But we might be passing the database 'id' here.
@@ -16,17 +17,24 @@ export async function PATCH(
     // Let's check if the param is a valid InfoType
     if (Object.values(InfoType).includes(id as InfoType)) {
         const updatedInfo = await ModernCMS.updateInfo(id as InfoType, body)
+        console.log(`PATCH /api/cms/info/${id} - Successfully updated info item.`)
         return NextResponse.json(updatedInfo)
     }
     
+    console.warn(`PATCH /api/cms/info/${id} - Invalid info type provided.`)
     // Fallback: if id is provided but not type, we might need a different method
     // For now, assume param is type or we add a getInfoById if needed.
     return NextResponse.json({ error: 'Invalid info type' }, { status: 400 })
   } catch (error: any) {
-    console.error('Update info error:', error)
+    console.error(`Info API PATCH error (id: ${id}):`, {
+      message: error.message,
+      stack: error.stack,
+      code: error.code
+    })
     return NextResponse.json({ 
       error: 'Failed to update info',
-      details: error.message || 'Unknown error'
+      details: error.message || 'Unknown error',
+      code: error.code
     }, { status: 500 })
   }
 }
