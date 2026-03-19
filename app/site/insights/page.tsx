@@ -5,6 +5,8 @@ import { BlogCard } from "@/components/BlogCard";
 import { ModernCMS } from "@/lib/modern-cms";
 import { ContentStatus } from "@/lib/cms-enums";
 
+type CMSPost = Awaited<ReturnType<typeof ModernCMS.getContents>>[number];
+
 export const metadata: Metadata = {
   title: "Insights",
   description:
@@ -49,7 +51,7 @@ export default async function InsightsPage() {
           <p className="hero-kicker text-mid-blue">Latest Posts</p>
 
           <div className="mt-7 grid gap-0 border border-[#d9deea] bg-white md:grid-cols-3">
-            {featuredPosts.map((post, index) => (
+            {featuredPosts.map((post: CMSPost, index: number) => (
               <article
                 key={post.id}
                 className={`p-5 ${
@@ -86,7 +88,7 @@ export default async function InsightsPage() {
             </p>
 
             <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
+              {posts.map((post: CMSPost) => (
                 <BlogCard
                   key={post.id}
                   title={post.title}

@@ -1,6 +1,25 @@
 import { prisma } from './prisma'
 import { ContentType, ContentStatus, UserRole, InfoType } from '@/lib/cms-enums'
 
+function isDatabaseConfigError(error: unknown): boolean {
+  const code = typeof error === 'object' && error !== null && 'code' in error
+    ? String((error as { code?: unknown }).code || '')
+    : ''
+
+  // Prisma known errors that indicate missing/unreachable database infrastructure.
+  if (['P1001', 'P1002', 'P1003', 'P1017', 'P2021', 'P2022'].includes(code)) {
+    return true
+  }
+
+  if (!(error instanceof Error)) return false
+  return (
+    error.message.includes('DATABASE_URL is not set') ||
+    error.message.includes('DATABASE_URL is not a valid URL') ||
+    error.message.includes('DATABASE_URL must use a postgres:// or postgresql:// scheme') ||
+    error.message.includes('does not exist on the database server')
+  )
+}
+
 // Types for the modern CMS
 export interface CreateContentData {
   title: string
@@ -52,30 +71,40 @@ export class ModernCMS {
   }) {
     const { take, skip, ...filters } = options || {}
     
-    return await prisma.content.findMany({
-      where: filters,
-      take,
-      skip,
-      include: {
-        author: {
-          select: { id: true, name: true, email: true }
+    try {
+      return await prisma.content.findMany({
+        where: filters,
+        take,
+        skip,
+        include: {
+          author: {
+            select: { id: true, name: true, email: true }
+          },
+          category: true
         },
-        category: true
-      },
-      orderBy: { publishedAt: 'desc' }
-    })
+        orderBy: { publishedAt: 'desc' }
+      })
+    } catch (error) {
+      if (isDatabaseConfigError(error)) return []
+      throw error
+    }
   }
 
   static async getContentBySlug(slug: string) {
-    return await prisma.content.findUnique({
-      where: { slug },
-      include: {
-        author: {
-          select: { id: true, name: true, email: true }
-        },
-        category: true
-      }
-    })
+    try {
+      return await prisma.content.findUnique({
+        where: { slug },
+        include: {
+          author: {
+            select: { id: true, name: true, email: true }
+          },
+          category: true
+        }
+      })
+    } catch (error) {
+      if (isDatabaseConfigError(error)) return null
+      throw error
+    }
   }
 
   static async createContent(data: CreateContentData) {
@@ -145,28 +174,38 @@ export class ModernCMS {
   static async getPages(options?: { status?: ContentStatus; template?: string; take?: number; skip?: number }) {
     const { take, skip, ...filters } = options || {}
     
-    return await prisma.page.findMany({
-      where: filters,
-      take,
-      skip,
-      include: {
-        author: {
-          select: { id: true, name: true, email: true }
-        }
-      },
-      orderBy: { updatedAt: 'desc' }
-    })
+    try {
+      return await prisma.page.findMany({
+        where: filters,
+        take,
+        skip,
+        include: {
+          author: {
+            select: { id: true, name: true, email: true }
+          }
+        },
+        orderBy: { updatedAt: 'desc' }
+      })
+    } catch (error) {
+      if (isDatabaseConfigError(error)) return []
+      throw error
+    }
   }
 
   static async getPageBySlug(slug: string) {
-    return await prisma.page.findUnique({
-      where: { slug },
-      include: {
-        author: {
-          select: { id: true, name: true, email: true }
+    try {
+      return await prisma.page.findUnique({
+        where: { slug },
+        include: {
+          author: {
+            select: { id: true, name: true, email: true }
+          }
         }
-      }
-    })
+      })
+    } catch (error) {
+      if (isDatabaseConfigError(error)) return null
+      throw error
+    }
   }
 
   static async createPage(data: CreatePageData) {
@@ -196,15 +235,25 @@ export class ModernCMS {
 
   // Info Management (Contact, About, Social, Legal, Settings)
   static async getInfo(type: InfoType) {
-    return await prisma.info.findUnique({
-      where: { type }
-    })
+    try {
+      return await prisma.info.findUnique({
+        where: { type }
+      })
+    } catch (error) {
+      if (isDatabaseConfigError(error)) return null
+      throw error
+    }
   }
 
   static async getAllInfo() {
-    return await prisma.info.findMany({
-      where: { isPublic: true }
-    })
+    try {
+      return await prisma.info.findMany({
+        where: { isPublic: true }
+      })
+    } catch (error) {
+      if (isDatabaseConfigError(error)) return []
+      throw error
+    }
   }
 
   static async createInfo(data: CreateInfoData) {
@@ -274,31 +323,47 @@ export class ModernCMS {
 
   // Statistics
   static async getStats() {
-    const [
-      totalContents,
-      publishedContents,
-      totalPages,
-      publishedPages,
-      totalCategories,
-      totalUsers
-    ] = await Promise.all([
-      prisma.content.count(),
-      prisma.content.count({ where: { status: ContentStatus.PUBLISHED } }),
-      prisma.page.count(),
-      prisma.page.count({ where: { status: ContentStatus.PUBLISHED } }),
-      prisma.category.count(),
-      prisma.user.count()
-    ])
+    try {
+      const [
+        totalContents,
+        publishedContents,
+        totalPages,
+        publishedPages,
+        totalCategories,
+        totalUsers
+      ] = await Promise.all([
+        prisma.content.count(),
+        prisma.content.count({ where: { status: ContentStatus.PUBLISHED } }),
+        prisma.page.count(),
+        prisma.page.count({ where: { status: ContentStatus.PUBLISHED } }),
+        prisma.category.count(),
+        prisma.user.count()
+      ])
 
-    return {
-      totalContents,
-      publishedContents,
-      draftContents: totalContents - publishedContents,
-      totalPages,
-      publishedPages,
-      draftPages: totalPages - publishedPages,
-      totalCategories,
-      totalUsers
+      return {
+        totalContents,
+        publishedContents,
+        draftContents: totalContents - publishedContents,
+        totalPages,
+        publishedPages,
+        draftPages: totalPages - publishedPages,
+        totalCategories,
+        totalUsers
+      }
+    } catch (error) {
+      if (isDatabaseConfigError(error)) {
+        return {
+          totalContents: 0,
+          publishedContents: 0,
+          draftContents: 0,
+          totalPages: 0,
+          publishedPages: 0,
+          draftPages: 0,
+          totalCategories: 0,
+          totalUsers: 0
+        }
+      }
+      throw error
     }
   }
 
