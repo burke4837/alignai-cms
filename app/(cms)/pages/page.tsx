@@ -12,7 +12,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from '@/components/ui/label'
 import { Plus, Edit, Trash2, Eye, Layout, Settings, FileText } from 'lucide-react'
 import { Sidebar } from '@/components/cms/ModernSidebar'
-import { ContentStatus } from '@prisma/client'
 import { CMSEditor } from '@/components/cms/CMSEditor'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { cn } from '@/lib/utils'

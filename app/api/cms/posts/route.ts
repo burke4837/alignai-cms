@@ -1,8 +1,15 @@
 import { NextResponse } from 'next/server'
 import { ModernCMS } from '@/lib/modern-cms'
+import { CustomCMS } from '@/lib/cms-db'
 
 export async function GET(request: Request) {
   try {
+    const hasDatabase = Boolean(process.env.DATABASE_URL?.trim())
+    if (!hasDatabase) {
+      const posts = await CustomCMS.getPosts()
+      return NextResponse.json({ posts })
+    }
+
     console.log('GET /api/cms/posts - Parsing query parameters...')
     const { searchParams } = new URL(request.url)
     const type = searchParams.get('type')

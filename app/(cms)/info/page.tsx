@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
 import { Plus, Edit, Trash2, Eye, Phone, Mail, MapPin, FileText, Info as InfoIcon, Globe, Map } from 'lucide-react'
-import { InfoType } from '@prisma/client'
+import { InfoType, type InfoType as InfoTypeValue } from '@/lib/cms-enums'
 import { cn } from '@/lib/utils'
 
 export default function InfoManager() {
@@ -18,7 +18,7 @@ export default function InfoManager() {
   const [loading, setLoading] = useState(true)
   const [showCreateDialog, setShowCreateDialog] = useState(false)
   const [formData, setFormData] = useState<{
-    type: InfoType,
+    type: InfoTypeValue,
     title: string,
     content: string,
     metadata: any
@@ -28,7 +28,7 @@ export default function InfoManager() {
     content: '',
     metadata: {}
   })
-  const [editingType, setEditingType] = useState<InfoType | null>(null)
+  const [editingType, setEditingType] = useState<InfoTypeValue | null>(null)
 
   useEffect(() => {
     fetchInfo()
@@ -93,7 +93,7 @@ export default function InfoManager() {
     }
   }
 
-  const getInfoIcon = (type: InfoType) => {
+  const getInfoIcon = (type: InfoTypeValue) => {
     switch (type) {
       case InfoType.CONTACT:
         return <Phone className="h-5 w-5 text-mid-blue" />
@@ -145,7 +145,7 @@ export default function InfoManager() {
                   <select
                     id="type"
                     value={formData.type as string}
-                    onChange={(e) => setFormData({ ...formData, type: e.target.value as InfoType })}
+                    onChange={(e) => setFormData({ ...formData, type: e.target.value as InfoTypeValue })}
                     disabled={!!editingType}
                     className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-navy focus:ring-2 focus:ring-mid-blue/30 outline-none transition-all disabled:bg-slate-50 disabled:text-slate-400"
                   >
