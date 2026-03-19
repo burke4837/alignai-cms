@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { BarChart3, FileText, Users, Eye, TrendingUp, Calendar, Home, Grid3x3, Settings, Menu } from 'lucide-react'
+import { BarChart3, FileText, Users, Eye, TrendingUp, Calendar, Home, Grid3x3, Settings, Menu, MessageSquare, Phone, Activity } from 'lucide-react'
 import { Sidebar } from '@/components/cms/ModernSidebar'
 import { cn } from '@/lib/utils'
 
@@ -130,6 +130,77 @@ export default function ModernDashboard() {
               </CardContent>
             </Card>
           </div>
+
+          {/* Chat Board Section */}
+          <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200 shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardHeader className="border-b border-blue-100 bg-gradient-to-r from-blue-100 to-indigo-100">
+              <CardTitle className="text-lg font-bold text-blue-900 flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-blue-600" />
+                Team Communication Hub
+              </CardTitle>
+              <div className="flex gap-2">
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-sm text-green-600 font-medium">Live Chat</span>
+                </div>
+                <Badge variant="secondary" className="bg-blue-600 text-white">
+                  12 Online
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-semibold text-blue-900 mb-2">Real-time Team Chat</h3>
+                    <p className="text-blue-700">Connect instantly with your team members</p>
+                  </div>
+                  <Button 
+                    onClick={() => window.open('/chat', '_blank')}
+                    className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
+                    size="lg"
+                  >
+                    <MessageSquare className="h-4 w-4 mr-2" />
+                    Open Chat Board
+                  </Button>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="text-center p-4 bg-white rounded-lg border border-blue-200">
+                    <Phone className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+                    <h4 className="font-semibold text-blue-900">Voice & Video Calls</h4>
+                    <p className="text-sm text-blue-700">HD quality calls with screen sharing</p>
+                  </div>
+                  
+                  <div className="text-center p-4 bg-white rounded-lg border border-blue-200">
+                    <Activity className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+                    <h4 className="font-semibold text-blue-900">Activity Tracking</h4>
+                    <p className="text-sm text-blue-700">See who's online and typing</p>
+                  </div>
+                  
+                  <div className="text-center p-4 bg-white rounded-lg border border-blue-200">
+                    <Users className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+                    <h4 className="font-semibold text-blue-900">Team Directory</h4>
+                    <p className="text-sm text-blue-700">View all team members</p>
+                  </div>
+                </div>
+                
+                <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <div>
+                      <p className="text-sm font-medium text-blue-900">
+                        <strong>Quick Access:</strong> Click "Open Chat Board" to start collaborating with your team in real-time.
+                      </p>
+                      <p className="text-xs text-blue-700 mt-1">
+                        Server running on port 3003 • WebSocket enabled • CORS configured
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Recent Content */}
           <Card className="bg-white border-slate-200 shadow-sm overflow-hidden">

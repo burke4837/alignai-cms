@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "chat-server": "ts-node server/chat-server.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
@@ -43,6 +44,8 @@
     "prisma": "^7.5.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
     "styled-components": "^6.3.11",
     "tailwind-merge": "^3.5.0"
   },
@@ -52,11 +55,13 @@
     "@types/pg": "^8.18.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@types/socket.io": "^3.0.1",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.3.0",
     "postcss": "^8.5.0",
     "tailwindcss": "^3.4.0",
+    "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^5.7.0"
   }
