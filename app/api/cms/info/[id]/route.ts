@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { ModernCMS } from '@/lib/modern-cms'
-import { InfoType } from '@prisma/client'
+import { InfoType, type InfoType as InfoTypeValue } from '@/lib/cms-enums'
 
 export async function PATCH(
   request: Request,
@@ -15,8 +15,8 @@ export async function PATCH(
     // ModernCMS.updateInfo takes InfoType.
     
     // Let's check if the param is a valid InfoType
-    if (Object.values(InfoType).includes(id as InfoType)) {
-        const updatedInfo = await ModernCMS.updateInfo(id as InfoType, body)
+    if (Object.values(InfoType).includes(id as InfoTypeValue)) {
+        const updatedInfo = await ModernCMS.updateInfo(id as InfoTypeValue, body)
         console.log(`PATCH /api/cms/info/${id} - Successfully updated info item.`)
         return NextResponse.json(updatedInfo)
     }
