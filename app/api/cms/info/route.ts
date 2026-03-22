@@ -3,6 +3,11 @@ import { ModernCMS } from '@/lib/modern-cms'
 
 export async function GET() {
   try {
+    const hasDatabase = Boolean(process.env.DATABASE_URL?.trim())
+    if (!hasDatabase) {
+      return NextResponse.json([])
+    }
+
     console.log('GET /api/cms/info - Fetching all info...')
     const info = await ModernCMS.getAllInfo()
     console.log(`GET /api/cms/info - Successfully fetched ${info.length} info items.`)

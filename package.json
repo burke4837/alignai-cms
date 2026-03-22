@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "chat-server": "ts-node server/chat-server.ts"
+    "chat-server": "ts-node server/chat-server.ts",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
@@ -29,7 +30,12 @@
     "@shadcn/ui": "^0.0.4",
     "@tailwindcss/typography": "^0.5.19",
     "@tiptap/extension-character-count": "^3.20.4",
+    "@tiptap/extension-image": "^3.20.4",
     "@tiptap/extension-link": "^3.20.4",
+    "@tiptap/extension-table": "^3.20.4",
+    "@tiptap/extension-table-cell": "^3.20.4",
+    "@tiptap/extension-table-header": "^3.20.4",
+    "@tiptap/extension-table-row": "^3.20.4",
     "@tiptap/extension-underline": "^3.20.4",
     "@tiptap/pm": "^3.20.1",
     "@tiptap/react": "^3.20.1",

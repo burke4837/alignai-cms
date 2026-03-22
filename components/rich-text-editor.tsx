@@ -4,10 +4,10 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
 import Link from '@tiptap/extension-link'
-import Table from '@tiptap/extension-table'
-import TableRow from '@tiptap/extension-table-row'
-import TableCell from '@tiptap/extension-table-cell'
-import TableHeader from '@tiptap/extension-table-header'
+import { Table } from '@tiptap/extension-table'
+import { TableRow } from '@tiptap/extension-table-row'
+import { TableCell } from '@tiptap/extension-table-cell'
+import { TableHeader } from '@tiptap/extension-table-header'
 import { useState } from 'react'
 import { 
   Bold, 
@@ -116,16 +116,16 @@ export function RichTextEditor({
   const addImage = () => {
     const url = prompt('Enter image URL:')
     if (url) {
-      editor.chain().focus().setImage({ src: url }).run()
+      (editor.chain().focus() as any).setImage({ src: url }).run()
     }
   }
 
   const addTable = () => {
-    editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
+    (editor.chain().focus() as any).insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
   }
 
   const deleteTable = () => {
-    editor.chain().focus().deleteTable().run()
+    (editor.chain().focus() as any).deleteTable().run()
   }
 
   return (
@@ -258,43 +258,43 @@ export function RichTextEditor({
         {editor.isActive('table') && (
           <div className="flex gap-1 mt-2 pt-2 border-t border-gray-300">
             <button
-              onClick={() => editor.chain().focus().deleteTable().run()}
+              onClick={() => (editor.chain().focus() as any).deleteTable().run()}
               className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
             >
               Delete Table
             </button>
             <button
-              onClick={() => editor.chain().focus().addColumnBefore().run()}
+              onClick={() => (editor.chain().focus() as any).addColumnBefore().run()}
               className="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600"
             >
               Add Column Before
             </button>
             <button
-              onClick={() => editor.chain().focus().addColumnAfter().run()}
+              onClick={() => (editor.chain().focus() as any).addColumnAfter().run()}
               className="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600"
             >
               Add Column After
             </button>
             <button
-              onClick={() => editor.chain().focus().deleteColumn().run()}
+              onClick={() => (editor.chain().focus() as any).deleteColumn().run()}
               className="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600"
             >
               Delete Column
             </button>
             <button
-              onClick={() => editor.chain().focus().addRowBefore().run()}
+              onClick={() => (editor.chain().focus() as any).addRowBefore().run()}
               className="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600"
             >
               Add Row Before
             </button>
             <button
-              onClick={() => editor.chain().focus().addRowAfter().run()}
+              onClick={() => (editor.chain().focus() as any).addRowAfter().run()}
               className="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600"
             >
               Add Row After
             </button>
             <button
-              onClick={() => editor.chain().focus().deleteRow().run()}
+              onClick={() => (editor.chain().focus() as any).deleteRow().run()}
               className="px-3 py-1 text-sm bg-gray-500 text-white rounded hover:bg-gray-600"
             >
               Delete Row

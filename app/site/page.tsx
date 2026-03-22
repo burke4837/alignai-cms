@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   // Fetch from CMS Page first
   const page = await ModernCMS.getPageBySlug('home');
-  
+
   // Fetch from SETTINGS info as fallback/complement
   const settingsInfo = await ModernCMS.getInfo(InfoType.SETTINGS);
   const settingsData = (settingsInfo?.metadata as any) || {};

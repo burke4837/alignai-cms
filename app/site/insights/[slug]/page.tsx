@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CTASection } from "@/components/CTASection";
 import { notFound } from "next/navigation";
 import { ModernCMS } from "@/lib/modern-cms";
-import { ContentStatus } from "@prisma/client";
+import { ContentStatus } from "@/lib/cms-enums";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -11,7 +11,7 @@ interface PageProps {
 
 export async function generateStaticParams() {
   const posts = await ModernCMS.getContents({ status: ContentStatus.PUBLISHED });
-  return posts.map((post) => ({ slug: post.slug }));
+  return posts.map((post: { slug: string }) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

@@ -13,7 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from '@/components/ui/label'
 import { Plus, Edit, Trash2, Eye, FileText, Calendar, Layout, Search } from 'lucide-react'
 import { Sidebar } from '@/components/cms/ModernSidebar'
-import { ContentType, ContentStatus } from '@prisma/client'
+import { ContentType, ContentStatus, type ContentType as ContentTypeValue, type ContentStatus as ContentStatusValue } from '@/lib/cms-enums'
 import { CMSEditor } from '@/components/cms/CMSEditor'
 import { cn } from '@/lib/utils'
 
@@ -27,8 +27,8 @@ export default function ContentManager() {
     slug: string;
     excerpt: string;
     content: string;
-    type: ContentType;
-    status: ContentStatus;
+    type: ContentTypeValue;
+    status: ContentStatusValue;
     featured: boolean;
     categoryId: string;
   }>({
@@ -179,7 +179,7 @@ export default function ContentManager() {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="type" className="text-sm font-bold text-navy">Content Type</Label>
-                      <Select value={formData.type} onValueChange={(value) => setFormData({ ...formData, type: value as ContentType })}>
+                      <Select value={formData.type} onValueChange={(value) => setFormData({ ...formData, type: value as ContentTypeValue })}>
                         <SelectTrigger className="bg-white border-slate-200 text-navy h-11 rounded-lg">
                           <SelectValue />
                         </SelectTrigger>

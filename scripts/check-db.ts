@@ -1,10 +1,10 @@
-import { prisma } from './lib/prisma'
+import { prisma } from '../lib/prisma'
 
 async function checkData() {
   try {
     console.log('--- PAGES ---')
     const pages = await prisma.page.findMany()
-    pages.forEach(p => {
+    pages.forEach((p: { title: string; slug: string; content: string; metadata: unknown }) => {
       console.log(`- ${p.title} (${p.slug}): ${p.content.substring(0, 50)}...`)
       if (p.metadata) {
         console.log(`  Metadata keys: ${Object.keys(p.metadata as any).join(', ')}`)
@@ -13,7 +13,7 @@ async function checkData() {
     
     console.log('\n--- INFO ---')
     const info = await prisma.info.findMany()
-    info.forEach(i => {
+    info.forEach((i: { type: string; title: string }) => {
       console.log(`- ${i.type}: ${i.title}`)
     })
 
