@@ -13,9 +13,9 @@ const config: Config = {
         "deep-blue": "#0A1F44",
         "mid-blue": "#0D2A5E",
         cyan: "#00F0FF",
-        slate: "#94A3B8",
-        "light-slate": "#CBD5E1",
-        "off-white": "#F8FAFC",
+        "brand-slate": "#94A3B8",
+        "brand-light-slate": "#CBD5E1",
+        "brand-off-white": "#F8FAFC",
         white: "#FFFFFF",
       },
       fontFamily: {

@@ -27,6 +27,7 @@ import {
   Link as LinkIcon,
   Eraser
 } from 'lucide-react'
+import { CheckCircle2 } from "lucide-react";
 import { cn } from '@/lib/utils'
 
 interface CMSEditorProps {
@@ -244,7 +245,7 @@ const MenuBar = ({ editor }: { editor: any }) => {
 const GhostToolbar = ({ editor, onDone }: { editor: any, onDone: () => void }) => {
   if (!editor) return null
   return (
-    <div className="flex flex-wrap items-center gap-0.5 p-1 bg-white border border-slate-200 rounded-lg shadow-sm mb-2 border-b">
+    <div className="flex flex-wrap items-center gap-0.5 p-1 bg-white border border-slate-200 rounded-lg shadow-xl mb-2 sticky top-[10px] z-[60]">
       <div className="flex items-center gap-0.5 border-r border-slate-100 pr-1 mr-1">
         <Button
           type="button"
@@ -265,16 +266,6 @@ const GhostToolbar = ({ editor, onDone }: { editor: any, onDone: () => void }) =
           title="Italic"
         >
           <Italic className="h-3.5 w-3.5" />
-        </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          onClick={() => editor.chain().focus().toggleUnderline().run()}
-          className={cn("h-7 w-7 p-0", editor.isActive('underline') ? 'bg-slate-100 text-navy' : 'text-slate-500')}
-          title="Underline"
-        >
-          <UnderlineIcon className="h-3.5 w-3.5" />
         </Button>
       </div>
 
@@ -305,25 +296,16 @@ const GhostToolbar = ({ editor, onDone }: { editor: any, onDone: () => void }) =
         >
           <List className="h-3.5 w-3.5" />
         </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={cn("h-7 w-7 p-0", editor.isActive('orderedList') ? 'bg-slate-100 text-navy' : 'text-slate-500')}
-          title="Numbers"
-        >
-          <ListOrdered className="h-3.5 w-3.5" />
-        </Button>
       </div>
 
       <Button
         type="button"
-        variant="ghost"
+        variant="default"
         size="sm"
         onClick={onDone}
-        className="ml-auto h-7 px-2 text-[10px] font-bold text-cyan-600 hover:text-cyan-700 bg-cyan-50 hover:bg-cyan-100 rounded"
+        className="ml-auto h-7 px-3 text-[10px] font-bold bg-cyan hover:bg-cyan/90 text-navy rounded flex items-center gap-1 shadow-sm"
       >
+        <CheckCircle2 className="w-3 h-3" />
         DONE
       </Button>
     </div>
@@ -416,14 +398,28 @@ export const CMSEditor: React.FC<CMSEditorProps> = ({
       </div>
       
       {variant === 'full' && (
-        <div className="bg-slate-50 border-t border-slate-100 px-4 py-2 flex justify-between items-center text-[10px] text-slate-400 font-medium">
+        <div className="bg-slate-50 border-t border-slate-100 px-4 py-3 flex justify-between items-center text-[10px] text-slate-400 font-medium">
           <div className="flex gap-3">
             <span>{editor?.storage.characterCount?.characters() || 0} characters</span>
             <span>{editor?.storage.characterCount?.words() || 0} words</span>
           </div>
-          <div className="flex items-center gap-1.5 font-bold text-mid-blue">
-            <div className="h-1 w-1 rounded-full bg-mid-blue" />
-            PRO EDITOR
+          
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5 font-bold text-slate-400 opacity-60">
+              <div className="h-1 w-1 rounded-full bg-slate-400" />
+              PRO EDITOR
+            </div>
+            
+            <Button
+              type="button"
+              variant="default"
+              size="sm"
+              onClick={handleDone}
+              className="h-8 px-5 bg-navy hover:bg-mid-blue text-white font-bold text-[10px] uppercase tracking-widest flex items-center gap-2 shadow-lg"
+            >
+              <CheckCircle2 className="w-3.5 h-3.5 text-cyan" />
+              DONE EDITING
+            </Button>
           </div>
         </div>
       )}

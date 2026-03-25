@@ -10,10 +10,20 @@
   }
 
   body {
-    @apply font-body text-slate bg-navy text-base leading-body;
+    @apply font-body bg-white text-slate-900 text-base leading-body;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  /* Website Theme (applied only to site parts) */
+  .dark-site-theme {
+    @apply bg-navy text-brand-light-slate;
+  }
+
+  .dark-site-theme h1, 
+  .dark-site-theme h2, 
+  .dark-site-theme h3, 
+  .dark-site-theme h4, 
+  .dark-site-theme h5, 
+  .dark-site-theme h6 {
     @apply text-white;
   }
 
@@ -24,12 +34,6 @@
   h2,
   h3 {
     @apply font-heading font-semibold;
-  }
-
-  h4,
-  h5,
-  h6 {
-    @apply font-heading font-medium;
   }
 
   ::selection {

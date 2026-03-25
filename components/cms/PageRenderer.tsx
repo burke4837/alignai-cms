@@ -1,10 +1,24 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Link from "next/link"
 import { CTASection } from "@/components/CTASection"
 import { CMSEditor } from "./CMSEditor"
 import { cn } from "@/lib/utils"
+import { 
+  Plus, 
+  Trash2, 
+  Image as ImageIcon, 
+  Upload, 
+  PlusCircle, 
+  Layout, 
+  ExternalLink,
+  Settings,
+  X
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 interface PageRendererProps {
   page: any
@@ -49,8 +63,14 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
   const tags = data.tags || []
   const cta = data.cta || {
     title: 'Ready to understand what your AI is actually deciding?',
-    description: 'No platform required. No prior governance work needed.'
+    description: 'No platform required. No prior governance work needed.',
+    ctaButtonText: 'Start a conversation →',
+    ctaButtonLink: '/site/contact'
   }
+
+  const customSections = data.customSections || []
+  const [isUploading, setIsUploading] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Metadata update helpers
   const updateHero = (field: string, value: string) => {
@@ -134,6 +154,60 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
     }
   }
 
+  const addCustomSection = () => {
+    if (onMetadataChange) {
+      const newSections = [...customSections, {
+        title: 'New Section Title',
+        content: '<p>Add your content here...</p>',
+        type: 'text'
+      }]
+      onMetadataChange({
+        ...data,
+        customSections: newSections
+      })
+    }
+  }
+
+  const updateCustomSection = (index: number, field: string, value: string) => {
+    if (onMetadataChange) {
+      const newSections = [...customSections]
+      newSections[index] = { ...newSections[index], [field]: value }
+      onMetadataChange({
+        ...data,
+        customSections: newSections
+      })
+    }
+  }
+
+  const removeCustomSection = (index: number) => {
+    if (onMetadataChange) {
+      const newSections = customSections.filter((_: any, i: number) => i !== index)
+      onMetadataChange({
+        ...data,
+        customSections: newSections
+      })
+    }
+  }
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click()
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file && onMetadataChange) {
+      setIsUploading(true)
+      // In a real app, you'd upload to a server here
+      // We'll simulate it with a local URL for the preview session
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        updateFounder('image', reader.result as string);
+        setIsUploading(false);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   const updateServiceArrayItem = (field: string, index: number, subfield: string, value: string) => {
     if (onMetadataChange) {
       const newArray = [...(data[field] || [])]
@@ -148,7 +222,10 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
   const [editingField, setEditingField] = useState<string | null>(null)
 
   return (
-    <div className={cn("flex flex-col min-h-screen font-body", isEditing ? "bg-slate-900/10" : "bg-navy")}>
+    <div className={cn(
+        "flex flex-col min-h-screen font-body dark-site-theme", 
+        isEditing ? "bg-navy" : "bg-navy"
+    )}>
       {/* Hero Section */}
       <section className={cn(
         "pt-32 pb-20 md:pt-44 md:pb-32 relative",
@@ -242,7 +319,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
             ) : (
               <div 
                 className={cn(
-                  "mb-12 max-w-2xl text-lg text-slate md:text-xl font-medium leading-relaxed opacity-90",
+                  "mb-12 max-w-2xl text-lg text-brand-slate md:text-xl font-medium leading-relaxed opacity-90",
                   isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1"
                 )}
                 onDoubleClick={() => isEditing && setEditingField('description')}
@@ -251,22 +328,89 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
             )}
 
             {/* Hero Buttons (from target site) */}
-            {isHome && !isEditing && (
+            {isHome && (
               <div className="flex flex-wrap gap-4 mt-12">
-                <Link 
-                  href="/site/framework" 
-                  className="bg-cyan hover:bg-white text-navy font-bold py-4 px-8 rounded-[4px] transition-all flex items-center gap-2 group text-sm uppercase tracking-wider"
-                >
-                  Explore the framework
-                  <span className="transition-transform group-hover:translate-x-1">→</span>
-                </Link>
-                <Link 
-                  href="/site/contact" 
-                  className="bg-transparent hover:bg-white/10 text-white border border-white/50 font-bold py-4 px-8 rounded-[4px] transition-all flex items-center gap-2 text-sm uppercase tracking-wider"
-                >
-                  Start a conversation
-                  <span>→</span>
-                </Link>
+                {isEditing && editingField === 'hero-buttons' ? (
+                  <div className="flex flex-col gap-3 p-6 bg-white/5 rounded-xl border border-white/10 w-full max-w-lg">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label className="text-white text-[10px] uppercase font-bold opacity-40">Button 1 Text</Label>
+                        <Input 
+                           value={data.heroBtn1Text || 'Explore the framework'} 
+                           onChange={(e) => updateMetadata('heroBtn1Text', e.target.value)}
+                           className="bg-navy text-white border-white/20 h-9"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-white text-[10px] uppercase font-bold opacity-40">Button 1 Link</Label>
+                        <Input 
+                           value={data.heroBtn1Link || '/site/framework'} 
+                           onChange={(e) => updateMetadata('heroBtn1Link', e.target.value)}
+                           className="bg-navy text-white border-white/20 h-9"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 mt-2">
+                      <div className="space-y-2">
+                        <Label className="text-white text-[10px] uppercase font-bold opacity-40">Button 2 Text</Label>
+                        <Input 
+                           value={data.heroBtn2Text || 'Start a conversation'} 
+                           onChange={(e) => updateMetadata('heroBtn2Text', e.target.value)}
+                           className="bg-navy text-white border-white/20 h-9"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-white text-[10px] uppercase font-bold opacity-40">Button 2 Link</Label>
+                        <Input 
+                           value={data.heroBtn2Link || '/site/contact'} 
+                           onChange={(e) => updateMetadata('heroBtn2Link', e.target.value)}
+                           className="bg-navy text-white border-white/20 h-9"
+                        />
+                      </div>
+                    </div>
+                    <Button 
+                      onClick={() => setEditingField(null)}
+                      className="mt-4 bg-cyan text-navy font-bold hover:bg-white"
+                    >
+                      DONE
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <Link 
+                      href={data.heroBtn1Link || "/site/framework"} 
+                      className={cn(
+                        "bg-cyan hover:bg-white text-navy font-bold py-4 px-8 rounded-[4px] transition-all flex items-center gap-2 group text-sm uppercase tracking-wider",
+                        isEditing && "hover:ring-2 hover:ring-white border border-transparent shadow-lg"
+                      )}
+                      onClick={(e) => {
+                        if (isEditing) {
+                          e.preventDefault();
+                          setEditingField('hero-buttons');
+                        }
+                      }}
+                    >
+                      {data.heroBtn1Text || "Explore the framework"}
+                      <span className="transition-transform group-hover:translate-x-1">→</span>
+                    </Link>
+                    <Link 
+                      href={data.heroBtn2Link || "/site/contact"} 
+                      className={cn(
+                        "bg-transparent hover:bg-white/10 text-white border border-white/50 font-bold py-4 px-8 rounded-[4px] transition-all flex items-center gap-2 text-sm uppercase tracking-wider",
+                        isEditing && "hover:ring-2 hover:ring-white/50 border border-transparent shadow-lg"
+                      )}
+                      onClick={(e) => {
+                        if (isEditing) {
+                          e.preventDefault();
+                          setEditingField('hero-buttons');
+                        }
+                      }}
+                    >
+                      {data.heroBtn2Text || "Start a conversation"}
+                      <span>→</span>
+                    </Link>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -284,7 +428,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
             ) : (
               <div 
                 className={cn(
-                  "prose prose-invert max-w-none text-slate opacity-90 leading-relaxed",
+                  "prose prose-invert max-w-none text-brand-slate opacity-90 leading-relaxed",
                   isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded p-4 bg-white/5"
                 )}
                 onDoubleClick={() => isEditing && setEditingField('content')}
@@ -309,9 +453,40 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
               <div className="grid gap-20 lg:grid-cols-[380px_1fr] lg:gap-24">
                 <div className="relative group">
                   <div className="absolute inset-0 bg-cyan/10 translate-x-4 translate-y-4 rounded-sm transition-transform group-hover:translate-x-2 group-hover:translate-y-2" />
-                  <div className="relative aspect-[3/4] w-full rounded-sm bg-[#0A1F44] border border-white/10 flex items-center justify-center text-slate/40 text-[10px] font-bold uppercase tracking-widest overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent" />
-                    <span>Headshot [Brian Burke]</span>
+                  <div className="relative aspect-[3/4] w-full rounded-sm bg-[#0A1F44] border border-white/10 flex items-center justify-center overflow-hidden">
+                    {founder.image ? (
+                        <img 
+                            src={founder.image} 
+                            alt={founder.name} 
+                            className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                        />
+                    ) : (
+                        <div className="flex flex-col items-center gap-3 opacity-40">
+                            <ImageIcon className="w-8 h-8 text-cyan" />
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">No Headshot</span>
+                        </div>
+                    )}
+                    
+                    {isEditing && (
+                        <div className="absolute inset-0 bg-navy/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-6 text-center">
+                            <input 
+                                type="file" 
+                                ref={fileInputRef} 
+                                className="hidden" 
+                                accept="image/*" 
+                                onChange={handleFileChange}
+                            />
+                            <Button 
+                                onClick={handleUploadClick}
+                                disabled={isUploading}
+                                className="bg-cyan text-navy font-bold hover:bg-white mb-2"
+                            >
+                                {isUploading ? "UPLOADING..." : "UPLOAD NEW"}
+                                <Upload className="ml-2 w-4 h-4" />
+                            </Button>
+                            <p className="text-[10px] text-white opacity-60 uppercase tracking-widest">Recommended: 3:4 Aspect Ratio</p>
+                        </div>
+                    )}
                   </div>
                 </div>
                 <div>
@@ -354,7 +529,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                     />
                   )}
 
-                  <div className="mt-12 space-y-8 text-slate text-lg leading-relaxed opacity-80">
+                  <div className="mt-12 space-y-8 text-brand-slate text-lg leading-relaxed opacity-80">
                     {founder.bio.map((p: string, i: number) => (
                       <div key={i}>
                         {isEditing && editingField === `founder.bio.${i}` ? (
@@ -457,7 +632,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                           />
                         ) : (
                           <div 
-                            className={cn("text-slate text-lg leading-relaxed max-w-2xl opacity-80", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
+                            className={cn("text-brand-slate text-lg leading-relaxed max-w-2xl opacity-80", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
                             onDoubleClick={() => isEditing && setEditingField(`pillars.${i}.description`)}
                             dangerouslySetInnerHTML={{ __html: pillar.description }}
                           />
@@ -513,7 +688,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                 />
               )}
               
-              <p className="mt-10 max-w-2xl text-slate text-lg leading-relaxed opacity-80">
+              <p className="mt-10 max-w-2xl text-brand-slate text-lg leading-relaxed opacity-80">
                  NIST, ISO 42001, and the EU AI Act focus on models, training data, and compliance outputs. They do not govern where AI actually changes enterprise behavior.
               </p>
 
@@ -527,7 +702,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                     index === 3 ? "" : ""
                   )}>
                     <div className="flex flex-col h-full">
-                       <span className="text-[10px] font-bold text-slate/30 mb-6 tracking-[0.3em] uppercase">0{index + 1}</span>
+                       <span className="text-[10px] font-bold text-brand-slate/30 mb-6 tracking-[0.3em] uppercase">0{index + 1}</span>
                       {isEditing && editingField === `problems.${index}.title` ? (
                         <div className="mb-4">
                           <CMSEditor 
@@ -558,7 +733,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                         </div>
                       ) : (
                         <div 
-                          className={cn("text-slate text-lg leading-relaxed opacity-70 flex-1", isEditing && "hover:ring-1 hover:ring-mid-blue/30 cursor-edit transition-all rounded px-1")}
+                          className={cn("text-brand-slate text-lg leading-relaxed opacity-70 flex-1", isEditing && "hover:ring-1 hover:ring-mid-blue/30 cursor-edit transition-all rounded px-1")}
                           onDoubleClick={() => isEditing && setEditingField(`problems.${index}.description`)}
                           dangerouslySetInnerHTML={{ __html: problem.description }}
                         />
@@ -616,7 +791,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                     />
                   )}
 
-                  <div className="mt-10 max-w-2xl space-y-6 text-lg leading-relaxed text-slate opacity-80 font-medium">
+                  <div className="mt-10 max-w-2xl space-y-6 text-lg leading-relaxed text-brand-slate opacity-80 font-medium">
                     {isEditing && editingField === 'engagement.desc1' ? (
                       <CMSEditor 
                         variant="ghost"
@@ -664,7 +839,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                           />
                         ) : (
                            <span 
-                            className={cn("rounded-sm border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-slate hover:text-cyan transition-colors", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all")}
+                            className={cn("rounded-sm border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-brand-slate hover:text-cyan transition-colors", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all")}
                             onDoubleClick={() => isEditing && setEditingField(`tags.${i}`)}
                             dangerouslySetInnerHTML={{ __html: tag }}
                            />
@@ -704,7 +879,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                             )}
 
                             {isEditing && editingField === `processSteps.${index}.description` ? (
-                              <div className="mt-2 text-slate">
+                              <div className="mt-2 text-brand-slate">
                                 <CMSEditor 
                                   variant="ghost"
                                   content={step.description}
@@ -714,7 +889,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                               </div>
                             ) : (
                               <p 
-                                className={cn("text-lg leading-relaxed text-slate opacity-70", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
+                                className={cn("text-lg leading-relaxed text-brand-slate opacity-70", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
                                 onDoubleClick={() => isEditing && setEditingField(`processSteps.${index}.description`)}
                                 dangerouslySetInnerHTML={{ __html: step.description }}
                               />
@@ -790,7 +965,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                               />
                             ) : (
                               <p 
-                                  className={cn("text-sm text-slate opacity-70 leading-relaxed", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
+                                  className={cn("text-sm text-brand-slate opacity-70 leading-relaxed", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
                                   onDoubleClick={() => setEditingField(`deliverables.${index}.description`)}
                                   dangerouslySetInnerHTML={{ __html: item.description }}
                               />
@@ -829,13 +1004,25 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                         onDone={() => setEditingField(null)}
                       />
                   ) : (
-                    <a 
-                        href={`mailto:${data.email || 'bburke@bytestream.ca'}`}
-                        className={cn("text-4xl md:text-7xl lg:text-8xl font-bold text-white hover:text-cyan transition-all duration-500 font-heading block tracking-tighter", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
-                        onDoubleClick={() => isEditing && setEditingField('contact.email')}
-                    >
-                        {data.email || 'bburke@bytestream.ca'}
-                    </a>
+                    <div className="relative group">
+                        <a 
+                            href={isEditing ? "#" : `mailto:${data.email || 'bburke@bytestream.ca'}`}
+                            className={cn("text-4xl md:text-7xl lg:text-8xl font-bold text-white hover:text-cyan transition-all duration-500 font-heading block tracking-tighter", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
+                            onClick={(e) => {
+                                if (isEditing) {
+                                    e.preventDefault();
+                                    setEditingField('contact.email');
+                                }
+                            }}
+                        >
+                            {data.email || 'bburke@bytestream.ca'}
+                        </a>
+                        {isEditing && (
+                            <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-cyan text-[10px] font-bold text-navy px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                CLICK TO EDIT EMAIL
+                            </div>
+                        )}
+                    </div>
                   )}
                 </div>
                 <div className="max-w-2xl mx-auto">
@@ -848,8 +1035,8 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                     />
                   ) : (
                     <p 
-                        className={cn("text-xl text-slate opacity-80 leading-relaxed font-medium", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
-                        onDoubleClick={() => isEditing && setEditingField('contact.subtext')}
+                        className={cn("text-xl text-brand-slate opacity-80 leading-relaxed font-medium", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
+                        onClick={() => isEditing && setEditingField('contact.subtext')}
                         dangerouslySetInnerHTML={{ __html: data.subtext || 'Whether you are early in AI deployment or already hitting scaling friction, the Assessment provides immediate decision visibility.' }}
                     />
                   )}
@@ -870,7 +1057,12 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                             target="_blank"
                             rel="noreferrer"
                             className={cn("text-cyan underline underline-offset-4 font-bold", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
-                            onDoubleClick={() => isEditing && setEditingField('contact.linkedin')}
+                            onClick={(e) => {
+                                if (isEditing) {
+                                    e.preventDefault();
+                                    setEditingField('contact.linkedin');
+                                }
+                            }}
                         >
                             LinkedIn
                         </a>
@@ -883,10 +1075,98 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
         </>
       )}
 
+      {/* Dynamic Custom Sections */}
+      {customSections.map((section: any, idx: number) => (
+        <section key={idx} className="bg-navy py-24 relative border-b border-white/5 group">
+           {isEditing && (
+             <div className="absolute top-4 right-4 z-20 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <Button 
+                   variant="ghost" 
+                   size="sm" 
+                   onClick={() => removeCustomSection(idx)}
+                   className="text-red-400 hover:text-red-500 hover:bg-red-500/10"
+                >
+                   <Trash2 className="w-4 h-4 mr-1" />
+                   REMOVE SECTION
+                </Button>
+             </div>
+           )}
+           <div className="container-main">
+              {isEditing && editingField === `custom.${idx}.title` ? (
+                 <div className="mb-8 flex flex-col gap-3 p-6 bg-white/5 border border-white/10 rounded-2xl animate-in fade-in slide-in-from-top-2">
+                     <Label className="text-cyan text-[10px] font-bold uppercase tracking-[0.2em] opacity-70">Define Section Title</Label>
+                     <div className="flex gap-2">
+                        <Input 
+                            value={section.title.replace(/<\/?[^>]+(>|$)/g, "")} 
+                            onChange={(e) => updateCustomSection(idx, 'title', e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && setEditingField(null)}
+                            className="bg-navy border-white/10 text-white font-heading text-2xl h-14 focus:ring-cyan focus:border-cyan rounded-sm flex-1"
+                            autoFocus
+                        />
+                        <Button 
+                            onClick={() => setEditingField(null)}
+                            className="bg-cyan text-navy font-bold hover:bg-white h-14 px-10 rounded-sm uppercase tracking-widest text-[10px] transition-all"
+                        >
+                            DONE
+                        </Button>
+                     </div>
+                 </div>
+               ) : (
+                 <h2 
+                     className={cn("text-3xl font-bold text-white font-heading mb-8 group/title flex items-center gap-4", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit px-2 py-1 rounded transition-all")}
+                     onClick={() => isEditing && setEditingField(`custom.${idx}.title`)}
+                 >
+                     {section.title.replace(/<\/?[^>]+(>|$)/g, "") || "Untitled Section"}
+                     {isEditing && (
+                        <span className="text-[10px] font-bold text-cyan opacity-0 group-hover/title:opacity-100 uppercase tracking-widest transition-opacity">
+                          (Click to Edit Title)
+                        </span>
+                     )}
+                 </h2>
+               )}
+
+              {isEditing && editingField === `custom.${idx}.content` ? (
+                 <div className="p-1 bg-white/5 rounded-2xl border border-white/10">
+                    <CMSEditor 
+                        variant="full"
+                        content={section.content}
+                        onChange={(val) => updateCustomSection(idx, 'content', val)}
+                        onDone={() => setEditingField(null)}
+                    />
+                 </div>
+               ) : (
+                <div 
+                    className={cn("prose prose-invert max-w-none text-brand-slate/80 text-lg", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit p-4 rounded-lg bg-white/5")}
+                    onClick={() => isEditing && setEditingField(`custom.${idx}.content`)}
+                    dangerouslySetInnerHTML={{ __html: section.content }}
+                />
+              )}
+           </div>
+        </section>
+      ))}
+
+      {/* Add Section Button (Editor Only) */}
+      {isEditing && (
+        <div className="py-20 flex flex-col items-center justify-center border-2 border-dashed border-white/10 mx-6 rounded-3xl mt-12 bg-white/[0.02] hover:bg-white/[0.04] transition-all group">
+            <PlusCircle className="w-12 h-12 text-cyan mb-4 group-hover:scale-110 transition-transform" />
+            <h3 className="text-white font-bold text-xl mb-2">Build your page further</h3>
+            <p className="text-brand-slate/60 text-sm mb-8 max-w-sm text-center">Add new custom sections to expand this page's architecture and content.</p>
+            <Button 
+                onClick={addCustomSection}
+                className="bg-cyan text-navy font-bold hover:bg-white px-8 h-12 rounded-sm uppercase tracking-widest shadow-xl"
+            >
+                <Plus className="w-5 h-5 mr-2" />
+                ADD NEW SECTION
+            </Button>
+        </div>
+      )}
+
       <div className="section-divider" />
       <CTASection 
         title={cta.title} 
         description={cta.description} 
+        ctaButtonText={cta.ctaButtonText}
+        ctaButtonLink={cta.ctaButtonLink}
         isEditing={isEditing} 
         onUpdate={updateCTA}
       />

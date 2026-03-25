@@ -8,11 +8,11 @@ export default function WebsiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="dark-site-theme min-h-screen">
       <Header />
       <main id="main-content">{children}</main>
       <Footer />
       <ChatWidget />
-    </>
+    </div>
   );
 }
