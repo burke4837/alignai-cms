@@ -77,8 +77,11 @@
     background: none;
     border-left: 250px solid transparent;
     border-right: 250px solid transparent;
-    border-bottom: 500px solid rgba(99, 188, 231, 0.07);
+    border-bottom: 500px solid rgba(99, 188, 231, 0.18); /* Increased from 0.07 for "thik" look */
     pointer-events: none;
+  }
+  .hero-panel.dark-shape-override::before {
+    border-bottom-color: rgba(8, 21, 44, 0.85); /* Prominent dark blue */
   }
 
 

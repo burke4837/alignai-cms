@@ -261,18 +261,14 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
       {template !== 'blank' && !isContact && !isInsights && (
         <section className={cn(
           "hero-panel relative",
-          isServices ? "min-h-[72vh] pt-28 pb-16 md:min-h-[85vh] md:pt-36 md:pb-24" : "pt-28 pb-14 md:pt-32 md:pb-16",
-          (isHome || isAbout || isFramework || isServices) ? "" : "bg-navy"
+          isServices ? "min-h-[72vh] pt-28 pb-16 md:min-h-[85vh] md:pt-36 md:pb-24 dark-shape-override" : "pt-28 pb-14 md:pt-32 md:pb-16",
+          (isHome || isAbout || isFramework || isServices) ? "" : "bg-navy",
+          isFramework && "framework-hero md:h-screen md:pt-32 pb-20"
         )} id="hero">
-        <div className="container-main relative z-10">
-          {/* Decorative triangle: framework only — home uses .hero-panel::before in globals.css (avoids double triangle) */}
-          {isFramework && !isEditing && (
-            <div className="absolute top-0 right-0 w-[50%] h-full pointer-events-none overflow-hidden opacity-30">
-               <div className="absolute bottom-0 right-[-5%] w-0 h-0 border-l-[600px] border-l-transparent border-b-[800px] border-b-deep-blue" />
-            </div>
-          )}
+        <div className={cn("container-main relative z-10", isFramework && "mt-32")}>
+          {/* Global triangle from globals.css is used here (shared with home) */}
 
-          <div className="max-w-4xl">
+          <div className="max-w-4xl relative z-10">
             {/* Kicker (shown on home too — matches live bytestream / ByteStream Strategies site) */}
             {isEditing && editingField === 'kicker' ? (
               <div className="mb-6">
@@ -288,7 +284,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
               <div 
                 className={cn("hero-kicker mb-8", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
                 onDoubleClick={() => isEditing && setEditingField('kicker')}
-                dangerouslySetInnerHTML={{ __html: hero.kicker || (isAbout ? 'The Founder' : (isFramework ? 'The Framework' : (isServices ? 'The Entry Point' : (isHome ? 'Enterprise AI Governance Architecture' : 'New Page')))) }}
+                dangerouslySetInnerHTML={{ __html: hero.kicker || (isAbout ? 'The Founder' : (isFramework ? 'THE FRAMEWORK' : (isServices ? 'The Entry Point' : (isHome ? 'Enterprise AI Governance Architecture' : 'New Page')))) }}
               />
             )}
 
@@ -308,11 +304,11 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                 className={cn(
                   isServices 
                     ? "mt-6 max-w-4xl text-4xl leading-[1.05] text-white sm:text-5xl md:text-[74px]" 
-                    : "hero-title max-w-[900px] text-[32px] leading-[1.08] md:text-[66px]",
+                    : (isFramework ? "mt-5 max-w-3xl text-4xl text-white md:text-6xl" : "hero-title max-w-[900px] text-[32px] leading-[1.08] md:text-[66px]"),
                   isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1"
                 )}
                 onDoubleClick={() => isEditing && setEditingField('title')}
-                dangerouslySetInnerHTML={{ __html: hero.title || (isHome ? 'AI is already influencing decisions in your organization.' : (isAbout ? 'Built from doctoral research.' : (isFramework ? 'Governance architecture for the layer most frameworks miss.' : (isServices ? 'The AI Decision Visibility <span class="block text-cyan">Assessment.</span>' : 'Start building your new page title...')))) }}
+                dangerouslySetInnerHTML={{ __html: hero.title || (isHome ? 'AI is already influencing decisions in your organization.' : (isAbout ? 'Built from doctoral research.' : (isFramework ? 'Governance architecture for the layer most frameworks <span class="text-cyan">miss.</span>' : (isServices ? 'The AI Decision Visibility <span class="block text-cyan">Assessment.</span>' : 'Start building your new page title...')))) }}
               />
             )}
 
@@ -356,11 +352,11 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                 className={cn(
                   isServices
                     ? "mt-8 max-w-prose text-[16px] leading-[1.7] text-light-slate"
-                    : "mt-6 max-w-[540px] text-sm leading-snug text-light-slate md:text-base md:max-w-[530px]",
+                    : (isFramework ? "mt-6 max-w-prose text-base text-light-slate" : "mt-6 max-w-[540px] text-sm leading-snug text-light-slate md:text-base md:max-w-[530px]"),
                   isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1"
                 )}
                 onDoubleClick={() => isEditing && setEditingField('description')}
-                dangerouslySetInnerHTML={{ __html: (isServices ? data.heroDescription : hero.description) || (isHome ? 'AlignAI governs the AI Decision Influence Layer — the environment created by AI systems before humans make decisions.' : (isAbout ? 'Delivered with 30 years of enterprise experience.' : 'AlignAI defines the structural controls for the AI decision environment your organization has already created.')) }}
+                dangerouslySetInnerHTML={{ __html: (isServices ? data.heroDescription : hero.description) || (isHome ? 'AlignAI governs the AI Decision Influence Layer — the environment created by AI systems before humans make decisions.' : (isAbout ? 'Delivered with 30 years of enterprise experience.' : (isFramework ? 'AlignAI defines the structural controls for the AI decision environment your organization has already created - but policies, not coherent architecture.' : 'AlignAI defines the structural controls for the AI decision environment your organization has already created.'))) }}
               />
             )}
 
@@ -687,41 +683,37 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                 />
               )}
               
-              <div className="relative mt-20 max-w-5xl mx-auto">
-                {/* Vertical Line */}
-                <div className="absolute left-[7px] md:left-[240px] top-0 bottom-0 w-px bg-white/10" />
-
-                <div className="space-y-16">
+               <div className="relative mt-12 max-w-5xl">
+                <ol>
                   {pillars.map((pillar: any, i: number) => (
-                    <div key={pillar.number || i} className="relative flex flex-col md:flex-row gap-8 pl-10 md:pl-0">
+                    <li key={pillar.number || i} className="relative grid gap-4 md:grid-cols-[240px_1fr] md:items-start">
                       {/* Left Column (Title/Number) */}
-                      <div className="md:w-[220px] md:text-right flex flex-col justify-center">
-                        <div className="flex flex-col md:items-end">
-                           <span className="text-[10px] font-bold text-cyan uppercase tracking-widest mb-1">0{pillar.number || i + 1}</span>
-                           {isEditing && editingField === `pillars.${i}.title` ? (
-                            <CMSEditor 
-                              variant="ghost"
-                              content={pillar.title}
-                              onChange={(val) => updatePillar(i, 'title', val)}
-                              onDone={() => setEditingField(null)}
-                            />
-                          ) : (
-                            <h3 
-                              className={cn("text-2xl font-bold text-white", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
-                              onDoubleClick={() => isEditing && setEditingField(`pillars.${i}.title`)}
-                              dangerouslySetInnerHTML={{ __html: pillar.title }}
-                            />
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Middle Node */}
-                      <div className="absolute left-0 md:left-[233px] top-1/2 -translate-y-1/2">
-                         <div className="w-4 h-4 rounded-full border-2 border-cyan bg-navy z-10" />
+                      <div className="md:pr-6 md:text-right md:pt-8">
+                         <span className="text-[10px] font-semibold tracking-[0.07em] text-cyan">0{pillar.number || i + 1}</span>
+                         {isEditing && editingField === `pillars.${i}.title` ? (
+                          <CMSEditor 
+                            variant="ghost"
+                            content={pillar.title}
+                            onChange={(val) => updatePillar(i, 'title', val)}
+                            onDone={() => setEditingField(null)}
+                          />
+                        ) : (
+                          <h3 
+                            className={cn("mt-2 text-xl font-semibold leading-tight text-white", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
+                            onDoubleClick={() => isEditing && setEditingField(`pillars.${i}.title`)}
+                            dangerouslySetInnerHTML={{ __html: pillar.title }}
+                          />
+                        )}
                       </div>
 
                       {/* Right Column (Description) */}
-                      <div className="flex-1 md:pl-12 py-2 flex items-center">
+                      <div className="max-w-3xl relative border-l-2 border-l-deep-blue border-t border-b border-t-[#12335a] border-b-[#12335a] py-8 pl-8 text-[15px] leading-relaxed text-light-slate first:border-t first:border-t-[#12335a]">
+                         <span
+                            className="z-10 absolute -left-2 top-0 p-0 mx-auto mt-9 flex h-3.5 w-3.5 items-center justify-center rounded-full border-[3px] border-cyan bg-navy"
+                            aria-hidden="true"
+                          >
+                            <span className="block h-2 w-2 rounded-full bg-navy" />
+                          </span>
                         {isEditing && editingField === `pillars.${i}.description` ? (
                           <CMSEditor 
                             variant="ghost"
@@ -731,15 +723,15 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                           />
                         ) : (
                           <div 
-                            className={cn("text-white/80 text-lg leading-relaxed max-w-2xl opacity-80", isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
+                            className={cn(isEditing && "hover:ring-1 hover:ring-cyan/30 cursor-edit transition-all rounded px-1")}
                             onDoubleClick={() => isEditing && setEditingField(`pillars.${i}.description`)}
                             dangerouslySetInnerHTML={{ __html: pillar.description }}
                           />
                         )}
                       </div>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ol>
               </div>
             </div>
           </section>
@@ -758,34 +750,32 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                 Governance architecture for the AI influence layer.
               </h2>
 
-              <div className="max-w-[800px] mx-auto space-y-4">
-                {(data.modelLayers || [
-                  { label: "Foundation", title: "Enterprise Operations" },
-                  { label: "Layer 2", title: "AI Systems (Yardi, Copilot, LLMs, etc.)" },
-                  { label: "The Gap", title: "AI Decision Influence Layer" },
-                  { label: "AlignAI", title: "Governance Architecture" },
-                  { label: "Outcome", title: "Responsible AI Adoption" }
-                ]).map((layer: any, idx: number) => (
-                  <div key={idx} className="flex flex-col items-center">
-                    <div className={cn(
-                      "w-full max-w-[600px] p-6 rounded-sm border flex flex-col items-center transition-all",
-                      idx === 2 ? "bg-cyan/10 border-cyan text-cyan" : 
-                      idx === 3 ? "bg-deep-blue text-white border-deep-blue" :
-                      "bg-white border-light-slate/40 text-navy"
-                    )}>
-                      <span className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-1">{layer.label}</span>
-                      <span className="text-lg font-bold">{layer.title}</span>
+               <div className="relative mt-10 max-w-4xl">
+                <div
+                  className="absolute left-8 top-12 bottom-10 hidden w-[3px] bg-[#1e4f89] md:block"
+                  aria-hidden="true"
+                />
+                <div className="space-y-7 max-w-2xl">
+                  {(data.modelLayers || [
+                    { label: "Foundation", title: "Enterprise Operations" },
+                    { label: "Layer 2", title: "AI Systems (Yardi, Copilot, LLMs, etc.)" },
+                    { label: "The Gap", title: "AI Decision Influence Layer" },
+                    { label: "AlignAI", title: "Governance Architecture" },
+                    { label: "Outcome", title: "Responsible AI Adoption" }
+                  ]).map((layer: any, idx: number) => (
+                    <div
+                      key={layer.label || idx}
+                      className="relative border-l-[3px] border-mid-blue bg-[#dde8f3] px-8 py-6 md:ml-2"
+                    >
+                      <p className="text-xs font-bold uppercase tracking-[0.07em] text-cyan">
+                        {layer.label}
+                      </p>
+                      <p className="mt-2 text-base font-semibold text-mid-blue md:text-lg">
+                        {layer.title}
+                      </p>
                     </div>
-                    {idx < (data.modelLayers?.length || 5) - 1 && (
-                      <div className="py-4">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-light-slate/60">
-                          <path d="M12 5v14" />
-                          <path d="m19 12-7 7-7-7" />
-                        </svg>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </section>

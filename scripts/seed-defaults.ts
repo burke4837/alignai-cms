@@ -146,6 +146,45 @@ async function main() {
     });
     console.log('Seeded Contact Page metadata.');
 
+    const frameworkDefaults = {
+      seoTitle: 'AlignAI Governance Framework',
+      seoDescription:
+        'Governance architecture for the layer where AI actually changes enterprise behaviour.',
+      hero: {
+        kicker: 'THE FRAMEWORK',
+        title: 'Governance architecture for the layer most frameworks <span class="text-cyan">miss.</span>',
+        description: 'AlignAI defines the structural controls for the AI decision environment your organization has already created - but policies, not coherent architecture.'
+      },
+      pillars: [
+        { number: "01", title: "Strategic Alignment", description: "Ensure AI initiatives operate within enterprise strategy. Establish governance authority, investment gating, and executive ownership over the AI decision environment." },
+        { number: "02", title: "Decision Visibility", description: "Map every location where AI systems influence operational decisions before humans act. Build the decision influence register your organization does not have yet." },
+        { number: "03", title: "Risk Classification", description: "Establish governance tiers based on operational and regulatory exposure. Not every AI touchpoint requires the same level of control, but every one requires classification." },
+        { number: "04", title: "Oversight Structures", description: "Define the monitoring, review cadence, override paths, and evidence requirements for each AI-influenced decision domain." },
+        { number: "05", title: "Executive Accountability", description: "Assign named ownership for every AI-influenced decision domain. Leadership must be able to answer: who is responsible when AI-influenced decision causes harm?" }
+      ],
+      modelLayers: [
+        { label: "Foundation", title: "Enterprise Operations" },
+        { label: "Layer 2", title: "AI Systems (Yardi, Copilot, LLMs, etc.)" },
+        { label: "The Gap", title: "AI Decision Influence Layer" },
+        { label: "AlignAI", title: "Governance Architecture" },
+        { label: "Outcome", title: "Responsible AI Adoption" }
+      ]
+    };
+
+    await prisma.page.upsert({
+      where: { slug: 'framework' },
+      update: { metadata: frameworkDefaults },
+      create: { 
+        title: 'Framework', 
+        slug: 'framework', 
+        content: 'Framework page content', 
+        metadata: frameworkDefaults,
+        status: 'PUBLISHED',
+        template: 'framework'
+      }
+    });
+    console.log('Seeded Framework Page metadata.');
+
     const insightsDefaults = {
       seoTitle: 'Insights',
       seoDescription:

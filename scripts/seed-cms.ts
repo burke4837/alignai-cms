@@ -92,8 +92,8 @@ async function main() {
         seoDescription:
           'Governance architecture for the layer where AI actually changes enterprise behaviour.',
         hero: {
-          kicker: 'The Framework',
-          title: 'Governance architecture for the layer most frameworks miss.',
+          kicker: 'THE FRAMEWORK',
+          title: 'Governance architecture for the layer most frameworks <span class="text-cyan">miss.</span>',
           description: 'AlignAI defines the structural controls for the AI decision environment your organization has already created - but policies, not coherent architecture.'
         },
         pillars: [
