@@ -660,7 +660,7 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
       {isFramework && (
         <>
           <div className="section-divider" />
-          <section className="bg-off-white py-32">
+          <section className="bg-navy py-32">
             <div className="container-main">
               {isEditing && editingField === 'pillars.kicker' ? (
                 <CMSEditor 
@@ -730,6 +730,52 @@ export function PageRenderer({ page, isEditing, onContentChange, onMetadataChang
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Model Layers Diagram Section */}
+          <div className="section-divider" />
+          <section className="bg-off-white py-32 border-b border-light-slate/30">
+            <div className="container-main text-center">
+              <div className="inline-flex items-center gap-3 mb-12">
+                <div className="h-px w-8 bg-mid-blue" />
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-mid-blue">Conceptual Model</p>
+                <div className="h-px w-8 bg-mid-blue" />
+              </div>
+              
+              <h2 className="text-4xl font-bold text-navy mb-20 max-w-3xl mx-auto">
+                Governance architecture for the AI influence layer.
+              </h2>
+
+              <div className="max-w-[800px] mx-auto space-y-4">
+                {(data.modelLayers || [
+                  { label: "Foundation", title: "Enterprise Operations" },
+                  { label: "Layer 2", title: "AI Systems (Yardi, Copilot, LLMs, etc.)" },
+                  { label: "The Gap", title: "AI Decision Influence Layer" },
+                  { label: "AlignAI", title: "Governance Architecture" },
+                  { label: "Outcome", title: "Responsible AI Adoption" }
+                ]).map((layer: any, idx: number) => (
+                  <div key={idx} className="flex flex-col items-center">
+                    <div className={cn(
+                      "w-full max-w-[600px] p-6 rounded-sm border flex flex-col items-center transition-all",
+                      idx === 2 ? "bg-cyan/10 border-cyan text-cyan" : 
+                      idx === 3 ? "bg-deep-blue text-white border-deep-blue" :
+                      "bg-white border-light-slate/40 text-navy"
+                    )}>
+                      <span className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-1">{layer.label}</span>
+                      <span className="text-lg font-bold">{layer.title}</span>
+                    </div>
+                    {idx < (data.modelLayers?.length || 5) - 1 && (
+                      <div className="py-4">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-light-slate/60">
+                          <path d="M12 5v14" />
+                          <path d="m19 12-7 7-7-7" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </section>

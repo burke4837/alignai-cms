@@ -11,3 +11,4 @@ next-env.d.ts
 
 # markdown files
 *.md
+build_output.txt
